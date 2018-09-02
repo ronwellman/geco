@@ -1,0 +1,639 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% KOMA-Script Presentation
+% LaTeX Template
+% Version 1.1 (18/10/15)
+%
+% This template has been downloaded from:
+% http://www.LaTeXTemplates.com
+%
+% Original Authors:
+% Marius Hofert (marius.hofert@math.ethz.ch)
+% Markus Kohm (komascript@gmx.info)
+% Described in the PracTeX Journal, 2010, No. 2
+%
+% License:
+% CC BY-NC-SA 3.0 (http://creativecommons.org/licenses/by-nc-sa/3.0/)
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%----------------------------------------------------------------------------------------
+%	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+%----------------------------------------------------------------------------------------
+
+\documentclass[
+%paper=128mm:96mm, % The same paper size as used in the beamer class
+a4paper,
+fontsize=14pt, % Font size
+pagesize, % Write page size to dvi or pdf
+parskip=half-, % Paragraphs separated by half a line
+]{scrartcl} % KOMA script (article)
+
+\linespread{1} % Increase line spacing for readability
+
+%------------------------------------------------
+% Colors
+\usepackage{xcolor}	 % Required for custom colors
+% Define a few colors for making text stand out within the presentation
+\definecolor{mygreen}{RGB}{44,85,17}
+\definecolor{myblue}{RGB}{34,31,217}
+\definecolor{mybrown}{RGB}{194,164,113}
+\definecolor{myred}{RGB}{255,66,56}
+% Use these colors within the presentation by enclosing text in the commands below
+\newcommand*{\mygreen}[1]{\textcolor{mygreen}{#1}}
+\newcommand*{\myblue}[1]{\textcolor{myblue}{#1}}
+\newcommand*{\mybrown}[1]{\textcolor{mybrown}{#1}}
+\newcommand*{\myred}[1]{\textcolor{myred}{#1}}
+%------------------------------------------------
+
+%------------------------------------------------
+% Margins
+\usepackage[ % Page margins settings
+includeheadfoot,
+top=3.5mm,
+bottom=3.5mm,
+left=1in,
+right=1in,
+headsep=6.5mm,
+footskip=8.5mm
+]{geometry}
+%------------------------------------------------
+
+%------------------------------------------------
+% Fonts
+\usepackage[T1]{fontenc}	 % For correct hyphenation and T1 encoding
+\usepackage{lmodern} % Default font: latin modern font
+%\usepackage{fourier} % Alternative font: utopia
+%\usepackage{charter} % Alternative font: low-resolution roman font
+\renewcommand{\familydefault}{\sfdefault} % Sans serif - this may need to be commented to see the alternative fonts
+%------------------------------------------------
+
+%------------------------------------------------
+% Various required packages
+\usepackage{amsthm} % Required for theorem environments
+\usepackage{bm} % Required for bold math symbols (used in the footer of the slides)
+\usepackage{graphicx} % Required for including images in figures
+\DeclareGraphicsExtensions{.png}
+\graphicspath{ {./images/} }
+\usepackage{tikz} % Required for colored boxes
+\usepackage{booktabs} % Required for horizontal rules in tables
+\usepackage{multicol} % Required for creating multiple columns in slides
+\usepackage{lastpage} % For printing the total number of pages at the bottom of each slide
+\usepackage[english]{babel} % Document language - required for customizing section titles
+\usepackage{microtype} % Better typography
+\usepackage{tocstyle} % Required for customizing the table of contents
+\usepackage{hyperref}
+\usepackage{url}
+\usepackage{subcaption}
+
+
+%------------------------------------------------
+\hypersetup{
+    bookmarks=false,            % show bookmarks bar?
+    pdftitle={Raspberry Pi VNC and SSH Access},         % title
+    pdfauthor={Joshua Wellman}, % author
+    pdfsubject={Raspberry Pi},       % subject of the document
+    pdfkeywords={raspberry,pi,vnc,ssh},   % list of keywords
+    colorlinks=true,            % false: boxed links; true: colored links
+    linkcolor=blue,             % color of internal links
+    citecolor=black,            % color of links to bibliography
+    filecolor=black,            % color of file links
+    urlcolor=purple,            % color of external links
+}
+%------------------------------------------------
+% Slide layout configuration
+\usepackage{scrpage2} % Required for customization of the header and footer
+\pagestyle{scrheadings} % Activates the pagestyle from scrpage2 for custom headers and footers
+\clearscrheadfoot % Remove the default header and footer
+\setkomafont{pageheadfoot}{\normalfont\color{black}\sffamily} % Font settings for the header and footer
+
+% Sets vertical centering of slide contents with increased space between paragraphs/lists
+\makeatletter
+\renewcommand*{\@textbottom}{\vskip \z@ \@plus 1fil}
+\newcommand*{\@texttop}{\vskip \z@ \@plus .5fil}
+\addtolength{\parskip}{\z@\@plus .25fil}
+\makeatother
+
+% Remove page numbers and the dots leading to them from the outline slide
+\makeatletter
+\newtocstyle[noonewithdot]{nodotnopagenumber}{\settocfeature{pagenumberbox}{\@gobble}}
+\makeatother
+\usetocstyle{nodotnopagenumber}
+
+\AtBeginDocument{\renewcaptionname{english}{\contentsname}{\Large Table of Contents}} % Change the name of the table of contents
+%------------------------------------------------
+
+%------------------------------------------------
+% Header configuration - if you don't want a header remove this block
+\ihead{
+\hspace{-2mm}
+\begin{tikzpicture}[remember picture,overlay]
+\node [xshift=\paperwidth/2,yshift=-\headheight] (mybar) at (current page.north west)[rectangle,fill,inner sep=0pt,minimum width=\paperwidth,minimum height=2\headheight,top color=mygreen!64,bottom color=mygreen]{}; % Colored bar
+\node[below of=mybar,yshift=3.3mm,rectangle,shade,inner sep=0pt,minimum width=128mm,minimum height =1.5mm,top color=black!50,bottom color=white]{}; % Shadow under the colored bar
+shadow
+\end{tikzpicture}
+\color{white}\runninghead} % Header text defined by the \runninghead command below and colored white for contrast
+%------------------------------------------------
+
+%------------------------------------------------
+% Footer configuration
+\setlength{\footheight}{8mm} % Height of the footer
+\addtokomafont{pagefoot}{\tiny} % Small font size for the footnote
+
+\ifoot{% Left side
+\hspace{-2mm}
+\begin{tikzpicture}[remember picture,overlay]
+\node [xshift=\paperwidth/2,yshift=\footheight] at (current page.south west)[rectangle,fill,inner sep=0pt,minimum width=\paperwidth,minimum height=3pt,top color=mygreen,bottom color=mygreen]{}; % Green bar
+\end{tikzpicture}
+\myclub\ \raisebox{0.2mm}{$\bm{\vert}$}\ \myclublong % Left side text
+}
+
+\ofoot[\pagemark/\pageref{LastPage}\hspace{-2mm}]{\pagemark/\pageref{LastPage}\hspace{-2mm}} % Right side
+%------------------------------------------------
+
+%------------------------------------------------
+% Section spacing - deeper section titles are given less space due to lesser importance
+%\usepackage{titlesec} % Required for customizing section spacing
+%\titlespacing{\section}{0mm}{0mm}{0mm} % Lengths are: left, before, after
+%\titlespacing{\subsection}{0mm}{0mm}{-1mm} % Lengths are: left, before, after
+%\titlespacing{\subsubsection}{0mm}{0mm}{-2mm} % Lengths are: left, before, after
+%\setcounter{secnumdepth}{0} % How deep sections are numbered, set to no numbering by default - change to 1 for numbering sections, 2 for numbering sections and subsections, etc
+%------------------------------------------------
+
+%------------------------------------------------
+% Theorem style
+\newtheoremstyle{mythmstyle} % Defines a new theorem style used in this template
+{0.5em} % Space above
+{0.5em} % Space below
+{} % Body font
+{} % Indent amount
+{\sffamily\bfseries} % Head font
+{} % Punctuation after head
+{\newline} % Space after head
+{\thmname{#1}\ \thmnote{(#3)}} % Head spec
+	
+\theoremstyle{mythmstyle} % Change the default style of the theorem to the one defined above
+\newtheorem{theorem}{Theorem}[section] % Label for theorems
+\newtheorem{remark}[theorem]{Remark} % Label for remarks
+\newtheorem{algorithm}[theorem]{Algorithm} % Label for algorithms
+\makeatletter % Correct qed adjustment
+%------------------------------------------------
+
+%------------------------------------------------
+% The code for the box which can be used to highlight an element of a slide (such as a theorem)
+\newcommand*{\mybox}[2]{ % The box takes two arguments: width and content
+\par\noindent
+\begin{tikzpicture}[mynodestyle/.style={rectangle,draw=mygreen,thick,inner sep=2mm,text justified,top color=white,bottom color=white,above}]\node[mynodestyle,at={(0.5*#1+2mm+0.4pt,0)}]{ % Box formatting
+\begin{minipage}[t]{#1}
+#2
+\end{minipage}
+};
+\end{tikzpicture}
+\par\vspace{-1.3em}}
+%------------------------------------------------
+
+%----------------------------------------------------------------------------------------
+%	PRESENTATION INFORMATION
+%----------------------------------------------------------------------------------------
+\newcommand*{\mytitle}{Raspberry Pi Configuration Guide} % Title
+\newcommand*{\runninghead}{\mytitle} % Running head displayed on almost all slides
+\newcommand*{\myclub}{GECO Club} % Club Short Name
+\newcommand*{\myclublong}{Girls Engineering \& Coding Organization} % Club long Name
+\newcommand*{\mydate}{\today} % Presentation date
+
+
+%----------------------------------------------------------------------------------------
+
+\begin{document}
+
+%----------------------------------------------------------------------------------------
+%	TITLE SLIDE
+%----------------------------------------------------------------------------------------
+
+% Title slide - you may have to tweak a few of the numbers if you wish to make changes to the layout
+\thispagestyle{empty} % No slide header and footer
+
+\begin{figure}[h]
+    \vspace{4cm}
+    \centering\includegraphics[width=.65\linewidth]{Geco}
+\end{figure}
+
+\begin{tikzpicture}[remember picture,overlay] % Background box
+\node [xshift=\paperwidth/2,yshift=\paperheight/4] at (current page.south west)[rectangle,fill,inner sep=0pt,minimum width=\paperwidth,minimum height=\paperheight/4.25,top color=mygreen,bottom color=mygreen]{}; % Change the height of the box, its colors and position on the page here
+\end{tikzpicture}
+% Text within the box
+\begin{flushright}  
+\vspace{2.cm}
+\color{white}\sffamily
+{\bfseries\LARGE\mytitle\par} % Title
+\vspace{0.25cm}
+\large
+\color{white}\sffamily
+\vspace{1cm}
+\myclub\par % Club name
+\mydate\par % Date
+\vfill
+\end{flushright}
+
+\clearpage
+
+%----------------------------------------------------------------------------------------
+%	TABLE OF CONTENTS
+%----------------------------------------------------------------------------------------
+
+\thispagestyle{empty} % No slide header and footer
+\clearpage
+\tableofcontents
+%\small\tableofcontents % Change the font size and print the table of contents - it may be useful to shrink the font size further if the presentation is full of sections
+% To exclude sections/subsections from the table of contents, put an asterisk after \(sub)section like so: \section*{Section Name}
+
+\clearpage
+
+%----------------------------------------------------------------------------------------
+%	PRESENTATION SLIDES
+%----------------------------------------------------------------------------------------
+\clearpage
+\section{Raspberry Pi Setup}
+The initial setup of the Raspberry Pi (RPi) assumes the following:
+
+\begin{itemize}
+    \item The RPi is running Raspian OS or the customized BSides Augusta STEM / Geco Girls image.
+    \item The RPi is hooked up initially to a keyboard and mouse.
+    \item The RPi has Wireless (Wifi) capabilities.
+    \item The Wifi access point (AP) is setup according to the Geco Girls standard. 
+\end{itemize}
+
+This guide will help you configure the RPi for VNC and SSH access.\\
+
+\textbf{VNC} - Virtual Network Computing (VNC) is a graphical desktop sharing system.  This will enable you to connect to the graphical desktop of the RPi.\\
+
+\textbf{SSH} - Secure Shell (SSH) is used to securely connect to another computer's command line interface (CLI).
+
+\clearpage
+
+\section{Raspberry Pi Configuration}
+\begin{enumerate}
+    \item Click on the RPi Start menu (Upper left Corner).
+    \item Click on \emph{Preferences}.
+    \item Click on \emph{Raspberry Pi Configuration}.
+\end{enumerate}
+
+
+\begin{figure}[h]
+    \centering\includegraphics[width=.65\linewidth]{raspberry_menu}
+    \caption{Raspberry Pi Configuration}
+\end{figure}
+
+\clearpage
+
+\subsection{Change Password}
+By default, the Raspberry Pi has a single user named \textbf{Pi} with no password.
+\begin{figure}[h]
+    \centering\includegraphics[width=.65\linewidth]{Raspberry_Configuration}
+    \caption{Raspberry Pi Configuration}
+\end{figure}
+\begin{enumerate}
+    \item Click on \emph{Change Password}.
+    \clearpage
+    \item Type in a password (See the \hyperlink{password}{Appendix} for Password List) and click \emph{OK}.
+\end{enumerate}  
+
+\begin{figure}[h]
+    \centering\includegraphics[width=.65\linewidth]{Raspberry_Change_Password}
+    \caption{Change Password}
+\end{figure}
+
+%\subsection{Change Hostname}
+
+\clearpage
+
+\subsection{Change Resolution}
+Depending upon the size of your screen, connecting to a higher resolution display can create additional slider bars on the VNC windows.  To resolve this, it is often necessary to adjust the resolution of the RPi.
+\begin{enumerate}
+    \item Click \emph{Resolution}.
+    \item Select an appropriate resolution like \emph{1024 x 768 60Hz}.
+    \item Do not restart when prompted.
+\end{enumerate}
+\begin{figure}[h]
+    \centering\includegraphics[width=.65\linewidth]{Raspberry_Resolution}
+    \caption{Resolution}
+\end{figure}
+
+\clearpage
+
+\subsection{Enable VNC and SSH}
+We will now enable VNC and SSH access into the RPi.
+\begin{enumerate}
+    \item Click on the \emph{Interfaces} tab.
+    \item Enable the \emph{VNC} and \emph{SSH} enable radio buttons.
+    \item Select \emph{OK}.
+\end{enumerate}
+\begin{figure}[h]
+    \centering\includegraphics[width=.65\linewidth]{Raspberry_Interfaces}
+    \caption{Interfaces}
+\end{figure}
+
+\clearpage
+
+\section{Connect to the Wifi}
+A wireless router has been configured for use with the RPi.
+\begin{enumerate}
+    \item In the upper right hand corner select the wireless Icon.
+    \item Select the SSID for \emph{gecoclub}.
+    \item See the \hyperlink{password}{Appendix} for appropriate settings.
+    
+\end{enumerate}
+\begin{figure}[h]
+    \centering\includegraphics[width=.65\linewidth]{Raspberry_Wifi}
+    \caption{Wifi}
+\end{figure}
+
+\clearpage
+
+\subsection{Reboot}
+
+Now that you have configured your password, resolution, services (VNC and SSH), and Wifi settings, its time to reboot.
+\begin{enumerate}
+    \item From the start menu, select \emph{Shutdown}.
+    \item When prompted, click \emph{Shutdown} to \hypertarget{shutdown}{shutdown}.
+\end{enumerate}
+\begin{figure}[h]
+    \begin{subfigure}{.5\textwidth}
+
+               \centering\includegraphics[width=.55\linewidth]{Raspberry_Menu_Shutdown}
+               \caption{Menu}
+ 
+    \end{subfigure}
+    \begin{subfigure}{.5\textwidth}
+
+                \centering\includegraphics[width=.65\linewidth]{Raspberry_Shutdown}
+                \caption{Popup}
+
+    \end{subfigure}
+\caption{Shutdown}
+\end{figure}
+
+\clearpage
+    
+\subsection{Lookup IP Address}
+Once the RPi reboots, it should automatically reconnect via WIFI.  Every device gets assigned an IP (Internet Protocol) address.  This will be in the form of \textbf{\texttt{192.168.0.X}} where X is a number from 2 - 254.  This is often referred to as a logical address as it may change.  Every device also has a MAC address.  This address does not change and will be in the form of \textbf{\texttt{B8:27:EB:E7:9D:3A}}.  The easiest way to look this up if from the terminal.
+\begin{enumerate}
+    \item Click on the terminal Icon in the upper left hand corner.
+    
+\begin{figure}[h]
+    \centering\includegraphics[width=.15\linewidth]{terminal}
+    \caption{Terminal Icon}
+\end{figure}
+    \item Type in \textbf{\texttt{ip addr}} and hit \textbf{ENTER}. Record this address as well as the MAC address.
+    \item Both the MAC address and the IP address should be listed under \textbf{wlan0}.
+\begin{figure}[h]
+    \centering\includegraphics[width=.65\linewidth]{ipaddr}
+    \caption{ip addr}
+\end{figure}
+\clearpage
+    \item Additionally, a mentor can look up your IP address given your MAC address by logging into the WIFI router.  Since your MAC address does not change, keeping this with your RPi will be convenient for easy lookup.
+    \begin{figure}[h]
+        \centering\includegraphics[width=.75\linewidth]{wirelessclients}
+        \caption{Wireless Clients}
+    \end{figure}
+\end{enumerate}
+
+\clearpage
+
+\section{Host Machine Setup}
+Now that the RPi is configured, its now time to configure your computer to remotely connect to it.  We will connect to it with VNC (Virtual Network Computing) Viewer.  This will give you access to your RPi's graphical interface.  Additionally, we'll connect via SSH (Secure Shell) which will only give us access to the command line interface.  This is the same interface that we used to in the terminal to find our IP address.
+\begin{enumerate}
+    \item Open a web browser and go to \url{https://www.realvnc.com/en/connect/download/viewer/}.
+    \item Depending upon the operating system you are using, click on the appropriate icon (Windows, macOS, Linux).
+    \item Most modern computers are 64bit so the default drop down menu should select x64.  If you know for certain you have a 32 bit machine, use the drop down menu and select x86.
+    \item Click the \textbf{DOWNLOAD VNC VIEWER} button.
+    \begin{figure}[h]
+        \centering\includegraphics[width=.75\linewidth]{RealVNC_Download}
+        \caption{VNC Viewer}
+    \end{figure}
+\end{enumerate}
+
+\clearpage
+
+\subsection{Windows}
+Installation on Windows is pretty standard for Windows installations.
+\begin{enumerate}
+    \item Once the download finishes, double click on the executable.  This should launch the installation.  Click \textbf{OK} and then \textbf{Next}.
+    \begin{figure}[h]
+        \begin{subfigure}{.5\textwidth}
+            \centering\includegraphics[width=.85\linewidth]{VNC_Install1} 
+        \end{subfigure}
+        \begin{subfigure}{.5\textwidth}
+            \centering\includegraphics[width=.85\linewidth]{VNC_Install2}
+        \end{subfigure}
+        \caption{Install}
+    \end{figure}
+    \item Check the License Agreement box and then click \textbf{Next}.
+    \begin{figure}[h]
+        \centering\includegraphics[width=.75\linewidth]{VNC_Install3}
+        \caption{Install}
+    \end{figure}
+
+\clearpage
+    \item Now click \textbf{Install} and \textbf{Finish}.
+    \begin{figure}[h]
+        \begin{subfigure}{.5\textwidth}
+            \centering\includegraphics[width=.85\linewidth]{VNC_Install5} 
+        \end{subfigure}
+        \begin{subfigure}{.5\textwidth}
+            \centering\includegraphics[width=.85\linewidth]{VNC_Install6}
+        \end{subfigure}
+        \caption{Install}
+    \end{figure}
+\end{enumerate}
+\subsection{macOS}
+You should have downloaded a \emph{.dmg} file for VNC Viewer from the Real VNC Website.
+\begin{enumerate}
+    \item Double click on the .dmg file.  This will create a virtual drive on your desktop.
+    \item Once opened drag the \textbf{VNC Viewer} icon into the \textbf{Applications} shortcut.
+    \begin{figure}[h]
+        \centering\includegraphics[width=.75\linewidth]{mac_VNC_Install1}
+        \caption{Install}
+    \end{figure}
+\end{enumerate}
+
+\subsection{Linux}
+There are a couple of different options for installing VNC Viewer on a Linux machine.  I will cover how to run the standalone executable as well as install the .deb package on a Debian based system.  There are a number of other Viewer's out there like Remmina that are quite configurable and can connect to various Remote Desktop systems.  However, the below steps were tested and verified to work with the RPi using Ubuntu 16.04.
+\subsubsection{Standalone}
+\begin{enumerate}
+    \item Open a web browser and go to \url{https://www.realvnc.com/en/connect/download/viewer/}.
+    \item Click on the Linux Icon and select \textbf{Standalone x64} from the drop down menu.
+    \item Click the \textbf{Download VNC Viewer} button.
+    \item Once the download is complete, from a terminal you'll need to add execution mode to the file to run it.  In the below example the executable downloaded as \emph{VNC-Viewer-6.18.625-Linux-x64} which was the latest version as of this writing.  You can set the execution mode bit by typing in \textbf{chmod u+x  VNC-Viewer-6.18.625-Linux-x64}.
+    \item Now simply run the file by typing \textbf{./VNC-Viewer-6.18.625-Linux-x64}.  This will be how you will launch VNC Viewer as it is a standalone executable that will not show up in your menu system.
+    \begin{figure}[h]
+        \centering\includegraphics[width=.75\linewidth]{CHMOD_VNC_VIEWER}
+        \caption{chmod and execute}
+    \end{figure}
+\end{enumerate}
+\subsubsection{Debian Package}
+\begin{enumerate}
+    \item Open a web browser and go to \url{https://www.realvnc.com/en/connect/download/viewer/}.
+    \item Click on the Linux Icon and select \textbf{DEB x64} from the drop down menu.
+    
+    \clearpage
+    
+    \item Once the download is complete, from a terminal, install it by running \textbf{dpkg -i VNC-Viewer-6.18.625-Linux-x64.deb}.
+    \begin{figure}[h]
+        \centering\includegraphics[width=.75\linewidth]{VNC_dpkg}
+        \caption{dpkg install}
+    \end{figure}
+    \item Once installed, VNC Viewer should be available within your menu system.
+    \item Additionally, some systems allow you to merely double click the \emph{.deb} file and use the graphical package installer.
+     \begin{figure}[h]
+         \centering\includegraphics[width=.75\linewidth]{VNC_Package_Installer}
+         \caption{Package Installer}
+     \end{figure}
+\end{enumerate}
+
+\clearpage
+\section{Connecting to the RPi}
+Its now time to connect to the Raspberry Pi. Your host machine should be connected to the same AP as the RPi in order to connect to it.  Settings can be found in the \hyperlink{wifi}{Appendix}. To locate the IP address of your RPi, ask a mentor to check the AP and locate your RPi.
+\begin{figure}[h]
+    \centering\includegraphics[width=.75\linewidth]{wirelessclients}
+    \caption{AP Lookup}
+\end{figure}
+\subsection{VNC}
+The steps to connect via VNC Viewer are very similar for Windows, macOS, and Linux systems so I will merely point out a few differences here and there.
+\begin{enumerate}
+    \item Launch VNC Viewer either by clicking on its new icon on your desktop, from your start menu, or from within your applications folder based on the platform you are using.
+    \item The number of windows that you may see before VNC is fully launched varies by platform.  You may be presented with a warning about having downloaded this program from the internet.  If so, simply click \textbf{Open}.
+    \item Additionally you may be asked to accept a EULA (End User License Agreement).  Click \textbf{OK}.
+    \item Lastly, at the "Getting Started with VNC Viewer window, click the \textbf{GOT IT} button.
+    \begin{figure}[h]
+        \begin{subfigure}{.3\textwidth}
+            \centering\includegraphics[width=.85\linewidth]{MAC_VNC_Open} 
+        \end{subfigure}
+        \begin{subfigure}{.3\textwidth}
+            \centering\includegraphics[width=.85\linewidth]{MAC_VNC_Open2}
+        \end{subfigure}
+        \begin{subfigure}{.3\textwidth}
+            \centering\includegraphics[width=.85\linewidth]{MAC_VNC_Open3}
+        \end{subfigure}
+        \caption{Launch VNC}
+    \end{figure}
+    \clearpage
+    \item From the file menu, select \textbf{New Connection}.
+    \begin{figure}[h]
+        \begin{subfigure}{.4\textwidth}
+            \centering\includegraphics[width=.85\linewidth]{VNC_NewConnection} 
+        \end{subfigure}
+        \begin{subfigure}{.6\textwidth}
+            \centering\includegraphics[width=.85\linewidth]{VNC_NewConnection2}
+        \end{subfigure}
+        \caption{New Connection}
+    \end{figure}
+    \item Fill in the IP address field, give it a nickname, and click \textbf{OK}.
+    \clearpage
+    \item You can either double click the new RPi Icon or right click it and select \textbf{Connect}.
+    \begin{figure}[h]
+        \centering\includegraphics[width=.75\linewidth]{VNC_NewConnection3}
+        \caption{New Connection}
+    \end{figure}
+    \item Since this is the first time you have connected to the RPi, you will be presented with a warning to accept the identity of the remote VNC Server.  Click \textbf{Continue}.
+    \begin{figure}[h]
+        \centering\includegraphics[width=.75\linewidth]{VNC_Identity_Check}
+        \caption{Identity Check}
+    \end{figure}
+    \clearpage
+    \item If VNC Viewer is able to connect to the RPi, you should be presented with a Login window.  Use the username and password you setup earlier.  A copy can be found in the \hyperlink{password}{Appendix}.  Additionally, you can check \textbf{Remember Password} so that you don't have to enter it every time you connect.
+    \begin{figure}[h]
+        \centering\includegraphics[width=.75\linewidth]{VNC_Login}
+        \caption{VNC Login}
+    \end{figure}
+    \item Once connected, you should see the RPi desktop and should be able to use it just as you did before.
+    \item To disconnect from the VNC session, hover your mouse near the top center of the window.  A drop down will emerge.  Select the \textbf{X} Icon to disconnect.
+    \begin{figure}[h]
+        \centering\includegraphics[width=.75\linewidth]{VNC_Disconnect1}
+        \caption{Disconnect}
+    \end{figure}
+    \item If you are quiting for the day, you can also \hyperlink{shutdown}{shutdown} the RPi as well.  As the RPi shuts down, it will also terminate your VNC connection.
+\end{enumerate}
+\clearpage
+\subsection{SSH}
+Connecting via the SSH is quite easy with Linux or macOS.  
+\subsubsection{Linux and MAC}
+\begin{enumerate}
+    \item Open up your terminal application.  Usually you can merely type terminal in your start menu's search option or finder to locate it.  Additionally, you may need to browse to Applications and then to Utilities in order to locate the terminal on a MAC. 
+    \item Once the terminal has been launched type \textbf{ssh USERNAME@IPADDRESS} being sure to use the correct username and IP address of your RPI.  For example, to use the username \textbf{pi} and the IP address \textbf{192.168.0.5} I would type in \textbf{ssh pi@192.168.0.5} in the terminal and hit \textbf{ENTER}.
+    \item You may be prompted to accept keys if this is the first time you have connected to your RPi via SSH.
+    \item Enter your password for the RPi and hit \textbf{ENTER}.
+    \begin{figure}[h]
+        \centering\includegraphics[width=.75\linewidth]{Raspberry_SSH}
+        \caption{SSH}
+    \end{figure}
+\end{enumerate}
+\subsubsection{Windows}
+With Windows additional software will be needed in order to connect to the RPi via SSH.  You can either install a program like Putty or if you're using Windows 10, install Ubuntu via the Windows Subsystem for Linux (WSL). The use of WSL is a worthwhile endeavor and the preferred approach but is beyond the scope of this document.
+\begin{enumerate}
+    \item Putty can be downloaded from \url{https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html}.  Download the \emph{MSI} file.
+    \item Once downloaded, double click it and follow the prompts.  You should end up clicking \textbf{Next, Next, Install,} and then \textbf{Finish}.
+    \item Once installed, launch it.
+    \item Enter the \textbf{IP Address} in the hostname box and ensure the SSH radio button is selected.
+    \item Enter the RPi name in the \textbf{Saved Sessions} box and click the \textbf{Save} button.
+    \item Click \textbf{Open}.
+    \begin{figure}[h]
+        \centering\includegraphics[width=.75\linewidth]{putty}
+        \caption{Putty}
+    \end{figure}
+    \clearpage
+    \item You should be prompted to accept the RPi certificate, click \textbf{Yes}.
+    \begin{figure}[h]
+        \centering\includegraphics[width=.75\linewidth]{putty_alert}
+        \caption{Putty Certificate}
+    \end{figure}
+    \item Once connected, you should be prompted for your username and password.
+\end{enumerate}
+
+
+
+\clearpage
+\section{Appendix}
+
+\subsection{Appendix A: WiFi Setup}
+\label{sec:wifi}
+\hypertarget{wifi}
+The following settings are used for the AP used for the RPis:
+\begin{itemize}
+    \item SSID:  gecoclub
+    \item Security:
+    \begin{itemize}
+        \item Password: girlpower
+        \item WPA Personal
+        \item AES TKIP
+        \item 2.4Ghz
+        \item 802.11a, 802.11b, 802.11n
+        \item 20/40mhz
+    \end{itemize}
+\end{itemize}
+
+%\section{Wifi Access Point (AP) Setup}
+%
+%\subsection{SSID}
+%
+%\subsection{DHCP}
+
+\clearpage
+
+\subsection{Appendix B: Password List}
+\hypertarget{password}
+The following usernames and passwords will serve as the default for all RPis and accompanying devices to ensure continued availability for the club:
+
+\begin{table}[h]
+    \centering
+    \begin{tabular}{l l l}
+        \toprule
+        \textbf{Device} & \textbf{Username} & \textbf{Password}\\
+        \midrule
+        Access Point & admin  & just4mentors \\
+        RPi & pi & raspberries \\
+        \bottomrule
+    \end{tabular}
+    \caption{Password List}
+\end{table}
+
+\end{document}
