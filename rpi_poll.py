@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 import curses
 from curses import wrapper
-import sys
 import requests
 from requests.exceptions import ConnectionError
 from hashlib import md5
@@ -28,19 +27,21 @@ def build_payload(text):
     hash = md5(password.encode('utf-8')).hexdigest()
 
     hash = salt + hash
-    payload = {'hash':hash, 'auth_code':'', 'auth_id':auth_id}
+    payload = {'hash': hash, 'auth_code': '', 'auth_id': auth_id}
     return payload
 
 
 def get_page(s, URL, payload=None):
     authdata = ''
 
-    if payload != None:
-        authdata = '?' + 'hash=' + payload['hash'] + '&' + 'auth_code=&auth_id=' + payload['auth_id']
+    if payload is not None:
+        authdata = '?' + 'hash=' + payload['hash'] + '&' +\
+            'auth_code=&auth_id=' + payload['auth_id']
 
     r = s.get(URL + authdata)
 
     return r
+
 
 def update_clients():
     s = requests.Session()
@@ -71,7 +72,7 @@ def update_clients():
 
         if 'assoc' in r.text:
             return r.text
-            
+
     return None
 
 
