@@ -81,7 +81,7 @@ def main(stdscr):
     rpi = {'B8:27:EB:0A:29:BE': {'NAME': 'raspberrypi', 'IP': ''},
            'B8:27:EB:6C:34:70': {'NAME': 'applepi', 'IP': ''},
            'B8:27:EB:BD:81:35': {'NAME': 'strawberrypi', 'IP': ''},
-           '00:0f:60:08:1f:04': {'NAME': 'cherrypi', 'IP': ''},
+           '00:0F:60:08:1F:04': {'NAME': 'cherrypi', 'IP': ''},
            'B8:27:EB:4A:AA:65': {'NAME': 'bannapi', 'IP': ''},
            'B8:27:EB:01:FB:49': {'NAME': 'lemonpi', 'IP': ''},
            'B8:27:EB:DC:69:19': {'NAME': 'pecanpi', 'IP': ''},
@@ -133,7 +133,7 @@ def main(stdscr):
         # load the dictionary with wireless RPI entries
         if soup:
             for entry in soup.find_all('assoc'):
-                mac = entry.mac.text
+                mac = entry.mac.text.upper()
                 mac = ':'.join((mac[x:x+2] for x in range(0, 12, 2)))
                 if mac in rpi:
                     rpi[mac]['IP'] = entry.ip_address.text
