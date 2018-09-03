@@ -1,13 +1,17 @@
 #!/usr/bin/env python3
 import curses
 from curses import wrapper
-import sys
 import requests
-from requests.exceptions import ConnectionError
+from requests.exceptions import ConnectionError, Timeout
 from hashlib import md5
 import re
 from bs4 import BeautifulSoup as bs
 import time
+
+
+class InvalidCredentials(Exception):
+    '''Thrown if login doesn't work as excpected.'''
+    pass
 
 
 def build_payload(text):
@@ -28,50 +32,48 @@ def build_payload(text):
     hash = md5(password.encode('utf-8')).hexdigest()
 
     hash = salt + hash
-    payload = {'hash':hash, 'auth_code':'', 'auth_id':auth_id}
+    payload = {'hash': hash, 'auth_code': '', 'auth_id': auth_id}
     return payload
 
 
 def get_page(s, URL, payload=None):
+    '''
+    General purpose function for executing a get request on the session given a
+    URL and potentially a payload.  Rather than passing the payload across, it
+    is used to build a custom get string.
+    '''
     authdata = ''
 
-    if payload != None:
-        authdata = '?' + 'hash=' + payload['hash'] + '&' + 'auth_code=&auth_id=' + payload['auth_id']
+    if payload is not None:
+        authdata = '?' + 'hash=' + payload['hash'] + '&' +\
+            'auth_code=&auth_id=' + payload['auth_id']
 
-    r = s.get(URL + authdata)
+    r = s.get(URL + authdata, timeout=.25)
 
     return r
 
+
 def update_clients():
-    s = requests.Session()
+    '''
+    Builds a requests session object and attempts to query the router for the
+    wireless clients.
+    '''
     URL = 'http://192.168.0.1/'
     POST_URL = 'http://192.168.0.1/post_login.xml'
 
-    # initial page holds aspects needed to generate login payload
-    try:
+    with requests.Session() as s:
+        # initial page holds aspects needed to generate login payload
         r = get_page(s, URL)
-    except ConnectionError:
-        print('Connection Error')
-        return None
-
-    payload = build_payload(r.text)
-
-    try:
+        payload = build_payload(r.text)
         r = get_page(s, POST_URL, payload)
-    except ConnectionError:
-        print('Connection Error')
-        return None
-
-    if 'Basic/Internet.shtml' in r.text:
-        try:
+        if 'Basic/Internet.shtml' in r.text:
             r = get_page(s, URL + 'wifi_assoc.xml')
-        except ConnectionError:
-            print("Unable to download wifi_assoc.xml")
-            return None
+        else:
+            raise InvalidCredentials
 
-        if 'assoc' in r.text:
-            return r.text
-            
+    if 'assoc' in r.text:
+        return r.text
+
     return None
 
 
@@ -94,23 +96,46 @@ def main(stdscr):
     stdscr.clear()
     curses.cbreak()
     curses.noecho()
-    curses.halfdelay(20)
+
+    # how long with getch wait for an input (10ths of a second)
+    curses.halfdelay(50)
+
+    # setup alternating colors
+    curses.init_pair(1, curses.COLOR_WHITE, curses.COLOR_BLACK)
+    curses.init_pair(2, curses.COLOR_BLACK, curses.COLOR_WHITE)
+    curses.init_pair(3, curses.COLOR_WHITE, curses.COLOR_GREEN)
+    curses.init_pair(4, curses.COLOR_WHITE, curses.COLOR_RED)
 
     loop = True
     while(loop):
+        line = 0
+        clients = None
+        soup = None
 
-        # get updated list of clients
-        clients = update_clients()
+        stdscr.move(0, 0)
+        stdscr.clrtoeol()
+        try:
+            # get updated list of clients
+            clients = update_clients()
+            stdscr.addstr(line, 0, f'Access Point: GOOD', curses.color_pair(3))
+        except (ConnectionError, Timeout) as e:
+            stdscr.addstr(line, 0, f'Access Point: ERROR Connecting',
+                          curses.color_pair(4))
+        except InvalidCredentials:
+            stdscr.addstr(line, 0, f'Access Point: Invalid Login Credentials',
+                          curses.color_pair(4))
+
+        line += 2
+
         if clients:
             soup = bs(clients, 'html.parser')
-        else:
-            return -1
 
-        for entry in soup.find_all('assoc'):
-            mac = entry.mac.text
-            mac = ':'.join((mac[x:x+2] for x in range(0, 12, 2)))
-            if mac in rpi:
-                rpi[mac]['IP'] = entry.ip_address.text
+        if soup:
+            for entry in soup.find_all('assoc'):
+                mac = entry.mac.text
+                mac = ':'.join((mac[x:x+2] for x in range(0, 12, 2)))
+                if mac in rpi:
+                    rpi[mac]['IP'] = entry.ip_address.text
 
         col_1 = 0
 
@@ -127,23 +152,19 @@ def main(stdscr):
         top_bar += "MAC ADDRESS" + " " * (col_3 - col_2 - col_1 - 11)
         top_bar += "IP ADDRESS"
 
-        stdscr.addstr(col_1, 0, top_bar, curses.A_UNDERLINE)
+        stdscr.addstr(line, col_1, top_bar, curses.A_UNDERLINE)
+        line += 1
 
-        # setup alternating colors
-        curses.init_pair(1, curses.COLOR_WHITE, curses.COLOR_BLACK)
-        curses.init_pair(2, curses.COLOR_BLACK, curses.COLOR_WHITE)
-
-        line = 1
         for k, v in sorted(rpi.items(), key=lambda x: x[1]['NAME']):
             if line % 2 == 0:
                 color = 1
             else:
                 color = 2
             stdscr.addstr(line, col_1, v['NAME'], curses.color_pair(color))
-            stdscr.addstr(line, len(k), " " * (col_2 - len(k)),
+            stdscr.addstr(line, col_1 + len(k), " " * (col_2 - len(k)),
                           curses.color_pair(color))
             stdscr.addstr(line, col_2, k, curses.color_pair(color))
-            stdscr.addstr(line, col_2 + 17, " " * 5,
+            stdscr.addstr(line, col_2 + 17,  " " * 5,
                           curses.color_pair(color))
             stdscr.addstr(line, col_3, v["IP"], curses.color_pair(color))
             line += 1
