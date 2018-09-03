@@ -130,6 +130,7 @@ def main(stdscr):
         if clients:
             soup = bs(clients, 'html.parser')
 
+        # load the dictionary with wireless RPI entries
         if soup:
             for entry in soup.find_all('assoc'):
                 mac = entry.mac.text
@@ -137,16 +138,22 @@ def main(stdscr):
                 if mac in rpi:
                     rpi[mac]['IP'] = entry.ip_address.text
 
+        max_name_size = max((len(v['NAME']) for v in rpi.values()))
+        max_ip_size = max((len(x["IP"]) for x in rpi.values()))
+
         col_1 = 0
 
-        max_name_size = max((len(x) for x in rpi))
-        max_ip_size = max((len(x["IP"]) for x in rpi.values()))
         if max_name_size < 12:
             col_2 = col_1 + 17
         else:
-            col_2 = col_1 + max_ip_size + 5
+            col_2 = col_1 + max_name_size + 5
 
         col_3 = col_2 + 22
+
+        if max_ip_size < 10:
+            col_4 = col_3 + 10
+        else:
+            col_4 = col_3 + max_ip_size
 
         top_bar = "RASPBERRY PI" + " " * (col_2 - 12)
         top_bar += "MAC ADDRESS" + " " * (col_3 - col_2 - col_1 - 11)
@@ -160,13 +167,22 @@ def main(stdscr):
                 color = 1
             else:
                 color = 2
-            stdscr.addstr(line, col_1, v['NAME'], curses.color_pair(color))
-            stdscr.addstr(line, col_1 + len(k), " " * (col_2 - len(k)),
+            name = v['NAME']
+            mac = k
+            ip = v['IP']
+
+            stdscr.addstr(line, col_1, name, curses.color_pair(color))
+            stdscr.addstr(line, col_1 + len(name),
+                          ' ' * (col_2 - (col_1 + len(name))),
                           curses.color_pair(color))
-            stdscr.addstr(line, col_2, k, curses.color_pair(color))
-            stdscr.addstr(line, col_2 + 17,  " " * 5,
+            stdscr.addstr(line, col_2,  mac, curses.color_pair(color))
+            stdscr.addstr(line, col_2 + 17,
+                          ' ' * 5,
                           curses.color_pair(color))
-            stdscr.addstr(line, col_3, v["IP"], curses.color_pair(color))
+            stdscr.addstr(line, col_3, ip, curses.color_pair(color))
+            stdscr.addstr(line, col_3 + len(ip),
+                          ' ' * (col_4 - (col_3 + len(ip))),
+                          curses.color_pair(color))
             line += 1
 
         stdscr.addstr(line + 2, 0, f'Last Poll: {time.ctime()}')
