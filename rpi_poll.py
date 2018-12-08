@@ -117,12 +117,12 @@ def main(stdscr):
         try:
             # get updated list of clients
             clients = update_clients()
-            stdscr.addstr(line, 0, f'Access Point: GOOD', curses.color_pair(3))
-        except (ConnectionError, Timeout) as e:
-            stdscr.addstr(line, 0, f'Access Point: ERROR Connecting',
+            stdscr.addstr(line, 0, 'Access Point: GOOD', curses.color_pair(3))
+        except (ReqConnectionError, Timeout):
+            stdscr.addstr(line, 0, 'Access Point: ERROR Connecting',
                           curses.color_pair(4))
         except InvalidCredentials:
-            stdscr.addstr(line, 0, f'Access Point: Invalid Login Credentials',
+            stdscr.addstr(line, 0, 'Access Point: Invalid Login Credentials',
                           curses.color_pair(4))
 
         line += 2
@@ -185,7 +185,7 @@ def main(stdscr):
                           curses.color_pair(color))
             line += 1
 
-        stdscr.addstr(line + 2, 0, f'Last Poll: {time.ctime()}')
+        stdscr.addstr(line + 2, 0, 'Last Poll: {}'.format(time.ctime()))
         stdscr.addstr(line + 4, 0, "HIT <Q> TO QUIT")
         stdscr.refresh()
 
