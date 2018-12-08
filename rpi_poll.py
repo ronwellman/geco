@@ -40,7 +40,7 @@ def build_payload(text):
     password += chr(1) * (64 - len(password))
     pw_hash = md5(password.encode('utf-8')).hexdigest()
 
-    pw_hash = salt + hash
+    pw_hash = salt + pw_hash
     payload = {'hash': pw_hash, 'auth_code': '', 'auth_id': auth_id}
     return payload
 
