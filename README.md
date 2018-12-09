@@ -30,6 +30,15 @@ This is a repository for various GECO girls projects.
    exit
    ```
 
+   A [run_rpi.sh](./run_rpi.sh) shell script has been included to make running the script within the virtual environment.
+   
+   ```bash
+   chmod u+x run_rpi.sh
+   ./run_rpi.sh
+   ```
+
+   This will run [rpi_poll.py](./rpi_poll.py) within the virtual environment.
+
 #### PIP
 
    If pipenv isn't your cup of tea, a [requirements.txt](./requirements.txt) file was included to replicate the environment using PIP. 
