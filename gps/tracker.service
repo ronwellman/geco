@@ -1,0 +1,11 @@
+[Unit]
+Description=Gunicorn/Flask implementation of a Gps tracker.
+After=gpsd.service
+
+[Service]
+User=pi
+WorkingDirectory=/home/pi/projects/gps
+ExecStart=/usr/local/bin/pipenv run gunicorn --bind 0.0.0.0 wsgi
+
+[Install]
+WantedBy=multi-user.target

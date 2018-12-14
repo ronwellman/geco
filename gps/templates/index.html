@@ -1,0 +1,94 @@
+<html>
+    <head>
+	<title>{% block title %}{% endblock %} - Santa Tracker</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+        <link href='https://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
+        <link href="{{ url_for('static', filename='custom.css') }}" rel='stylesheet' type='text/css'>
+    </head>
+    <body>
+
+        <div class="container">
+
+            <div class="row">
+
+		<div class="col-md-2">
+		    <img src={{ url_for('static', filename='santa.jpg') }} alt="Santa Claus" style="width:200px;height:200px;">
+		</div>
+
+                <div class="col-lg-8">
+
+                    <h1>Operation Track Santa</h1>
+
+                    <h4 >Phase 1:</h4>
+
+                    <p class="complete">Design and build a GPS tracker.</p>
+                    
+                    <h4> Phase 2:</h4>
+
+                    <p>Slip the tracker into Santa's Sleigh.</p>
+
+                    <h4>Phase 3:</h4>
+
+                    <p>Have fun watching Santa travel the globe.</p>
+
+                </div>
+		
+	    </div> <!-- /.row-->
+
+        </div> <!-- /.container-->
+
+        <div id="map"></div>
+
+        <script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+	<script async defer src="https://maps.googleapis.com/maps/api/js?key={{ api_key }}&callback=initMap"></script>
+        
+	
+	<script>
+    function initMap() {
+
+        var map_data = JSON.parse({{ data|tojson }});
+        var location = new google.maps.LatLng(map_data.lat, map_data.lon);
+
+        var mapCanvas = document.getElementById('map');
+        var mapOptions = {
+            center: location,
+            zoom: 18,
+            panControl: false,
+            scrollwheel: false,
+            MapTypeId: google.maps.MapTypeId.SATELLITE
+        }
+        var map = new google.maps.Map(mapCanvas, mapOptions);
+
+        var markerImage = map_data.marker; 
+
+        var marker = new google.maps.Marker({
+            position: location,
+            map: map,
+            icon: markerImage
+        });
+
+        var contentString = '<div class="info-window">' +
+                '<h3>Santa Claus</h3>' +
+                '<div class="info-content">' +
+                '<p>Ho! Ho! Ho! Merry Christmas GECO GIRLS!</p>' +
+                '</div>' +
+                '</div>';
+
+        var infowindow = new google.maps.InfoWindow({
+            content: contentString,
+            maxWidth: 400
+        });
+
+        marker.addListener('click', function () {
+            infowindow.open(map, marker);
+        });
+
+
+    }
+	</script>
+	
+    </body>
+</html>

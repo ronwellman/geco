@@ -1,0 +1,47 @@
+# update the rpi
+sudo apt update && sudo apt -y dist-upgrade && sudo rpi-update
+sudo shutdown -r now
+
+# install gpsd
+sudo apt install gpsd
+sudo vi /etc/default/gpsd
+sudo systemctl start gpsd
+sudo systemctl enable gpsd
+
+# validate gps signals into gpsd
+gpsmon
+
+# make project folder
+mkdir projects
+cd projects
+
+# clone the repot
+git clone https://
+
+# install pipenv
+apt intstall python3-pip
+pip3 install --user pipenv
+
+# install required python packages from the cloned Pipfile
+pipenv install
+
+# Generate private key for flask
+# copy into config.py as SECRET_KEY = b'THE BELOW GENERATED KEY'
+python3 -c 'import os; print(os.urandom(16))'
+
+# Generate google maps API key.
+# Copy into config.py as MAPS_API_KEY = 'GENERATED API FROM BELOW'
+# Be careful with this key as others can use it and you may be billed for doing so.
+# What I'm doing  in this project is definately not safe.
+https://cloud.google.com/maps-platform/?apis=maps
+
+# update the tracker.service to point pipenv to your working directory
+vi tracker.service
+
+# copy the cloned tracker.service file to /etc/systemd/system/multi-user.target.wants/
+cp tracker.service /etc/systemd/system/multi-user.target.wants/
+sudo chmod 700 /etc/systemd/system/multi-user.target.wants/
+
+# start the tracker and have it run on startup
+sudo systemctl start tracker
+sudo systemctl enable tracker
