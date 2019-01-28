@@ -5,7 +5,7 @@ import RPi.GPIO as GPIO
 import time
 
 buzzer = 17
-unit = .2
+unit = .1
 '''
 There are rules to help people distinguish dots from dashes in Morse code.
 The length of a dot is 1 time unit.
@@ -81,13 +81,13 @@ def main():
     the resulting dots and dashes to the buzzer.
     '''
     try:
-        # infinit loop
+        # infinite loop
         while True:
 
             # prompt the user for input
             message = input("What is your message: ")
 
-            # transplate the input into morse code
+            # translate the input into morse code
             code = encode(message)
             print(code)
 

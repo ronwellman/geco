@@ -1,12 +1,42 @@
-# Geco Girls Morse Code Generator
-This small program is used to demonstrate the use of **if** statements, **for
-loops**, and **exceptions** for the Geco Girls coding club.  Additionally, we talk about the circuit
-(transister, resister, and buzzer) attached to the Raspberry PI via GPIO 17.
+# Morse Code Generator
+In this lab, we build a tool that takes text as input, translates it into morse
+code, and plays it over a buzzer connected to the Raspberry Pi (RPi).
+
+This lab is intended to guide the students towards figuring out the components
+of the lab rather than provide to them working code.  Students are not
+expected to be able to write this from scratch but provide input as we explore
+the Raspberry Pi (RPi) Command Line Interface (CLI) and the python code
+required to complete it.
+
+Additionally, morse_code.py has been configured as a package for the students
+to import as they code up generator.py.  They will be required to wire up the
+circuit and code the generator.py script along with the mentor.  They should
+not have to touch morse_code.py directly.
+
+## Morse Code Lab
+This lab was built for the GECO girls to touch on the following principles:
+
+  * Basic Electionics:
+    * DC circuits
+    * Transistors
+  * Linux CLI commands:
+    * cd
+    * mkdir
+    * wget
+    * tar
+    * gunzip
+    * touch
+    * chmod
+  * Python fundamentals:
+    * for loops
+    * if statements
+    * RPi.GPIO
+    * importing packages
+    * exception handling
 
 ## Hardware
 All of the below parts are part of the Sunfounder Super Kit v2 for Raspberry Pi
-(RPi) except for the RPi itself. The hardware follows Lab 6 in the manual that
-comes with the kit.
+(RPi) except for the RPi itself. 
 
   * RPi
   * Breadboard

@@ -35,7 +35,7 @@ def encode(message):
         cipher = ''
         for letter in word:
             # Looks up the dictionary and adds the
-            # correspponding morse code
+            # corresponding morse code
             # along with a space to separate
             # morse codes for different characters
             try:
