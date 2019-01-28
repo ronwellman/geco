@@ -55,6 +55,12 @@ attribution and licensing below.
 The morse_code.py software was copied from: 
 > https://www.geeksforgeeks.org/morse-code-translator-python/
 
+It has been heavily modified to make it specific to this lab.
+
+The schematic images/morse_code-schematic.png was copied from the Sunfunder
+Lesson 6 Buzzer available at:
+> https://www.sunfounder.com/learn/category/Super_Kit_V2_for_RaspberryPi.html
+
 ## Licensing
 Geeks for Geeks is covered by the following license: 
 > Attribution-ShareAlike 4.0 International (CC BY-SA 4.0)  
