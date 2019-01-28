@@ -30,8 +30,9 @@ MORSE_CODE_DICT = {'A': '.-', 'B': '-...',
 # according to the morse code chart
 def encode(message):
     message = message.upper()
-    cipher = ''
+    ciphertext = []
     for word in message.split(' '):
+        cipher = ''
         for letter in word:
             # Looks up the dictionary and adds the
             # correspponding morse code
@@ -41,9 +42,9 @@ def encode(message):
                 cipher += MORSE_CODE_DICT[letter] + '1'
             except KeyError:
                 pass
-        cipher[-1] = '7'
+        ciphertext.append(cipher.rstrip('1'))
 
-    return cipher[:-1]
+    return '7'.join(ciphertext)
 
 
 # Hard-coded driver function to run the program
