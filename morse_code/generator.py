@@ -5,7 +5,7 @@ import RPi.GPIO as GPIO
 import time
 
 buzzer = 17
-unit = .1
+unit = .2
 '''
 There are rules to help people distinguish dots from dashes in Morse code.
 The length of a dot is 1 time unit.
