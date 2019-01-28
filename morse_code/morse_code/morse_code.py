@@ -49,7 +49,7 @@ def encode(message):
 # Hard-coded driver function to run the program
 def main():
     message = "GEEKS-FOR-GEEKS"
-    result = encrypt(message.upper())
+    result = encode(message.upper())
     print(result)
 
 
