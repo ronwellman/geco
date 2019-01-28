@@ -45,10 +45,12 @@ Mentors should tar and gzip the morse_code package and host it for the students
 to download.  It is assumed, this package is already on the mentor RPi at the
 following location: 
 
-Lab:     `/home/pi/projects/morse_code/`
-Package: `/home/pi/projects/morse_code/morse_code/`
-Files:   `/home/pi/projects/morse_code/morse_code/morse_code.py
-Files:   `/home/pi/projects/Morse_code/morse_code/__init__.py
+```
+/home/pi/projects/morse_code/
+/home/pi/projects/morse_code/morse_code/
+/home/pi/projects/morse_code/morse_code/morse_code.py
+/home/pi/projects/Morse_code/morse_code/__init__.py
+```
 
 ```bash
 cd ~/projects/morse_code/
