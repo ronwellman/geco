@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 ############################################
-# Code borrowed and lightly modified from Geeks for Geeks
+# Code borrowed and heavily modified from Geeks for Geeks
 # https://www.geeksforgeeks.org/morse-code-translator-python/
 #
 # Attribution-ShareAlike 4.0 International (CC BY-SA 4.0)
@@ -31,71 +31,25 @@ MORSE_CODE_DICT = {'A': '.-', 'B': '-...',
 def encrypt(message):
     message = message.upper()
     cipher = ''
-    for letter in message:
-        if letter != ' ':
-
+    for word in message.split(' '):
+        for letter in word:
             # Looks up the dictionary and adds the
             # correspponding morse code
             # along with a space to separate
             # morse codes for different characters
-            cipher += MORSE_CODE_DICT[letter] + ' '
-        else:
-            # 1 space indicates different characters
-            # and 2 indicates different words
-            cipher += ' '
+            try:
+                cipher += MORSE_CODE_DICT[letter] + '1'
+            except KeyError:
+                pass
+        cipher[-1] = '7'
 
-    return cipher
-
-
-# Function to decrypt the string
-# from morse to english
-def decrypt(message):
-
-    # extra space added at the end to access the
-    # last morse code
-    message += ' '
-
-    decipher = ''
-    citext = ''
-    for letter in message:
-
-        # checks for space
-        if (letter != ' '):
-
-            # counter to keep track of space
-            i = 0
-
-            # storing morse code of a single character
-            citext += letter
-
-        # in case of space
-        else:
-            # if i = 1 that indicates a new character
-            i += 1
-
-            # if i = 2 that indicates a new word
-            if i == 2:
-
-                # adding space to separate words
-                decipher += ' '
-            else:
-
-                # accessing the keys using their values (reverse of encryption)
-                decipher += list(MORSE_CODE_DICT.keys())[list(
-                    MORSE_CODE_DICT.values()).index(citext)]
-                citext = ''
-
-    return decipher
+    return cipher[:-1]
 
 
 # Hard-coded driver function to run the program
 def main():
     message = "GEEKS-FOR-GEEKS"
     result = encrypt(message.upper())
-    print(result)
-
-    message = "--. . . -.- ... -....- ..-. --- .-. -....- --. . . -.- ... "
-    result = decrypt(message)
     print(result)
 
 
