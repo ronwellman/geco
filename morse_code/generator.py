@@ -9,6 +9,7 @@ unit = .1
 
 # 8550 -> PNP
 # 8050 -> NPN
+# 2222 -> NPN
 trans = 'PNP'
 
 
@@ -79,7 +80,7 @@ def play_dash():
     time.sleep(3 * unit)
 
     # The space between symbols of the same letter is 1 time unit.
-    GPIO.output(buzzer, GPIO.HIGH if trans == 'NPN' else GPIO.LOW)
+    GPIO.output(buzzer, GPIO.HIGH if trans == 'PNP' else GPIO.LOW)
     time.sleep(1 * unit)
 
 
