@@ -6,6 +6,12 @@ import time
 
 buzzer = 17
 unit = .1
+
+# 8550 -> PNP
+# 8050 -> NPN
+trans = 'PNP'
+
+
 '''
 There are rules to help people distinguish dots from dashes in Morse code.
 The length of a dot is 1 time unit.
@@ -30,7 +36,11 @@ def setup():
     GPIO.setup(buzzer, GPIO.OUT)
 
     # PNP transistor - High stops flow, Low allows flow
-    GPIO.output(buzzer, GPIO.HIGH)
+    # NPN transistor - Low stops flow, High allows flow
+    if trans == 'PNP':
+        GPIO.output(buzzer, GPIO.HIGH)
+    elif trans == 'NPN':
+        GPIO.output(buzzer, GPIO.LOW)
 
 
 def teardown():
@@ -50,11 +60,11 @@ def play_dot():
     Play a morse code dot (short).
     '''
     # The length of a dot is 1 time unit.
-    GPIO.output(buzzer, GPIO.LOW)
+    GPIO.output(buzzer, GPIO.LOW if trans == 'PNP' else GPIO.HIGH)
     time.sleep(1 * unit)
 
     # The space between symbols of the same letter is 1 time unit.
-    GPIO.output(buzzer, GPIO.HIGH)
+    GPIO.output(buzzer, GPIO.HIGH if trans == 'PNP' else GPIO.LOW)
     time.sleep(1 * unit)
 
 
@@ -65,11 +75,11 @@ def play_dash():
     Play a morse code dash (long).
     '''
     # A dash is 3 time units.
-    GPIO.output(buzzer, GPIO.LOW)
+    GPIO.output(buzzer, GPIO.LOW if trans == 'PNP' else GPIO.HIGH)
     time.sleep(3 * unit)
 
     # The space between symbols of the same letter is 1 time unit.
-    GPIO.output(buzzer, GPIO.HIGH)
+    GPIO.output(buzzer, GPIO.HIGH if trans == 'NPN' else GPIO.LOW)
     time.sleep(1 * unit)
 
 
