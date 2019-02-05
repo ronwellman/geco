@@ -16,7 +16,7 @@ not have to touch morse_code.py directly.
 ## Morse Code Lab
 This lab was built for the GECO girls to touch on the following principles:
 
-  * Basic Electionics:
+  * Basic Electronics:
     * DC circuits
     * Transistors
   * Linux CLI commands:
@@ -42,13 +42,13 @@ All of the below parts are part of the Sunfounder Super Kit v2 for Raspberry Pi
   * Breadboard
   * 1k Resister
   * Buzzer
-  * PNP Transister (8550)
+  * PNP Transistor (8550) or NPN Transistor (2222, 8050)
   * ~ 6 Jumper wires
 
 ## Software
 With the exception of this project's files, no other software is required
-outside of the standard Raspian image for the RPi.  generator.py was written 
-by Joshua Wellman and morse_code.py was copied from Geeks for Geeks.  See 
+outside of the standard Raspian image for the RPi.  The original code for this 
+project  was copied from Geeks for Geeks and then heavily modified.  See 
 attribution and licensing below.
 
 ## Attribution
