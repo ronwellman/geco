@@ -9,6 +9,7 @@ addends = [0, 0, 0, 0]
 result = 0
 mode = 0
 
+
 def setup():
     '''
     setup() -> NoneType
@@ -40,7 +41,7 @@ def teardown():
 def button_push(button):
     '''
     button_push(int) -> None
-    
+
     Updates the LEDs and mode according the the button that was pushed.
     '''
     global mode
@@ -71,7 +72,7 @@ def button_push(button):
 def add_number():
     '''
     add_number() -> None
-    
+
     Sum the binary digits and store the result.
     '''
     global result
@@ -119,7 +120,6 @@ def main():
 
     Add four binary bits together and display results to LEDs.
     '''
- 
     try:
         # infinite loop
         while True:
