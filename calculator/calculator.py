@@ -3,8 +3,8 @@
 import RPi.GPIO as GPIO
 import time
 
-# The GPIO numbers are enterd backwards from actual placement on the board
-# leds[0] cooresponsds to Least Significant Bit (LSB - rightmost LED)
+# The GPIO numbers are entered backwards from actual placement on the board
+# leds[0] corresponds to Least Significant Bit (LSB - rightmost LED)
 # buttons[0] corresponds to LSB
 leds = [19, 13, 22, 27, 17]
 buttons = [25, 24, 23, 18, 21]
@@ -29,10 +29,12 @@ def setup():
     GPIO.setmode(GPIO.BCM)
 
     for led in leds:
+        # set the LEDs as input devices and set low
         GPIO.setup(led, GPIO.OUT)
         GPIO.output(led, GPIO.LOW)
 
     for button in buttons:
+        # set the buttons as output devices
         GPIO.setup(button, GPIO.IN, GPIO.PUD_UP)
         # Detects the release of a button and ignores bouncing for 300 ms
         GPIO.add_event_detect(button, GPIO.RISING, button_push, 300)
