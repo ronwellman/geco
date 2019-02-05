@@ -22,6 +22,8 @@ progresses through three modes:
 *  Mode 1 - Accept second number
 *  Mode 2 - Display the sum
 
+Additionally, the values and results should be printed to the CLI.
+
 ## Getting the files
 Now make the calculator pseudocode available to the students via python:
 
@@ -31,7 +33,8 @@ python -m http.server
 ```
 
 This should launch a web server on port 8000.  Students should go to their
-respective CLIs on their RPi and enter the following:
+respective CLIs on their RPi and pull down the pseudocode.  The projects
+directory may have been created in a previous lab.
 
 ```
 cd ~/
