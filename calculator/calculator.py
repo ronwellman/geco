@@ -34,6 +34,7 @@ def setup():
 
     for button in buttons:
         GPIO.setup(button, GPIO.IN, GPIO.PUD_UP)
+        # Detects the release of a button and ignores bouncing for 300 ms
         GPIO.add_event_detect(button, GPIO.RISING, button_push, 300)
 
 
@@ -53,9 +54,17 @@ def button_push(button):
 
     Updates the LEDs and mode according the the button that was pushed.
     '''
+    # marked global to ensure it references the global mode and result since
+    # assignments in this function that will cause python to refer to them
+    # as local variables.
     global mode
     global result
+
+    # GPIO21 is the add button
     if button != 21:
+
+        # find the index value (buttons list) of the button that was pressed
+        # and used that index to update the leds list and bits list
         index = buttons.index(button)
         if bits[index] == 0:
             bits[index] = 1
@@ -64,13 +73,16 @@ def button_push(button):
             bits[index] = 0
             GPIO.output(leds[index], GPIO.LOW)
     else:
+
+        # add button was pressed, check mode and update accordingly
+        # Mode 0 - First Entry, Mode 1 - Second Entry, Mode 3 - Display Sum
         if mode == 0:
-            mode += 1
             add_number()
+            mode += 1
             clear_leds()
         elif mode == 1:
-            mode += 1
             add_number()
+            mode += 1
             display_sum()
         else:
             mode = 0
@@ -82,15 +94,24 @@ def add_number():
     '''
     add_number() -> None
 
-    Sum the binary digits and store the result.
+    Sum the binary bits and store the result.
     '''
+    # marked global to ensure it references the global result since
+    # assignments in this function will cause python to refer to it as a local
+    # variable
     global result
-    position = 0
-    for digit in bits:
-        if digit:
-            result += 2**position
-        position += 1
-    print(result)
+
+    # since bits are already in reverse order, iterate through in order
+    for index, bit in enumerate(bits):
+        if bit:
+            result += 2**index
+
+    print(result, end='')
+
+    if mode == 0:
+        print(' + ', end='')
+    else:
+        print('= ', end='')
 
 
 def clear_leds():
@@ -112,14 +133,23 @@ def display_sum():
 
     Display the sum in binary on the LEDs.
     '''
+    # display result without destroying result
     temp = result
     index = 0
+
+    # iterates from Least Significant Bit (LSB) to Most Significant Bit (MSB)
+    # by checking if the number is odd, and then shifting one bit to the right
+    # until temp is zero
     while temp:
+
+        # check if odd
         if temp % 2 == 1:
             GPIO.output(leds[index], GPIO.HIGH)
         else:
             GPIO.output(leds[index], GPIO.LOW)
         index += 1
+
+        # shift bits to the right by one
         temp = temp >> 1
 
 
@@ -132,6 +162,8 @@ def main():
     try:
         # infinite loop
         while True:
+            # main loop only sleeps as button pushes are automatically caught
+            # via GPIO.add_event_detect
             time.sleep(1)
 
     # catch ctrl-c
@@ -146,6 +178,7 @@ if __name__ == "__main__":
     # initialize the RPi GPIO interface
     setup()
 
+    # run the main loop
     main()
 
     # restore the RPi GPIO interface
