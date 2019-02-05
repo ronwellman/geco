@@ -3,10 +3,19 @@
 import RPi.GPIO as GPIO
 import time
 
+# The GPIO numbers are enterd backwards from actual placement on the board
+# leds[0] cooresponsds to Least Significant Bit (LSB - rightmost LED)
+# buttons[0] corresponds to LSB
 leds = [19, 13, 22, 27, 17]
 buttons = [25, 24, 23, 18, 21]
-addends = [0, 0, 0, 0]
+
+# bits are backwards and correspond to [2^0, 2^1, 2^2, 2^3]
+bits = [0, 0, 0, 0]
+
+# results is the sum
 result = 0
+
+# Mode 0 - First Entry, Mode 1 - Second Entry, Mode 3 - Display Sum
 mode = 0
 
 
@@ -48,11 +57,11 @@ def button_push(button):
     global result
     if button != 21:
         index = buttons.index(button)
-        if addends[index] == 0:
-            addends[index] = 1
+        if bits[index] == 0:
+            bits[index] = 1
             GPIO.output(leds[index], GPIO.HIGH)
         else:
-            addends[index] = 0
+            bits[index] = 0
             GPIO.output(leds[index], GPIO.LOW)
     else:
         if mode == 0:
@@ -77,7 +86,7 @@ def add_number():
     '''
     global result
     position = 0
-    for digit in addends:
+    for digit in bits:
         if digit:
             result += 2**position
         position += 1
@@ -93,8 +102,8 @@ def clear_leds():
     for led in leds:
         GPIO.output(led, GPIO.LOW)
 
-    for index in range(len(addends)):
-        addends[index] = 0
+    for index in range(len(bits)):
+        bits[index] = 0
 
 
 def display_sum():
