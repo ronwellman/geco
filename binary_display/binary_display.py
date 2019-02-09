@@ -79,6 +79,7 @@ def main():
 
             except ValueError:
                 print("Invalid number: {}".format(number))
+                continue
 
             # output the number to the LEDs
             display_binary(number)
