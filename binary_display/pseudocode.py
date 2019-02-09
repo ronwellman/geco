@@ -41,6 +41,9 @@ def display_binary(number):
     '''
     index = 0
 
+    # clear all lights before displaying the new ones
+    
+    
     # iterates from Least Significant Bit (LSB) to Most Significant Bit (MSB)
     # by checking if the number is odd, and then shifting one bit to the right
     # until number is zero
@@ -60,6 +63,16 @@ def display_binary(number):
         #
         # INSERT CODE HERE
         #
+
+
+def clear_display():
+    '''
+    clear_display() -> None
+
+    Sets all of the LEDs to low
+    '''
+    # loop through the LEDs and set them to low
+
 
 
 def main():
@@ -91,6 +104,7 @@ def main():
 
             except ValueError:
                 print("Invalid number: {}".format(number))
+                continue
 
             # output the number to the LEDs
             #
