@@ -40,6 +40,9 @@ def display_binary(number):
     '''
     index = 0
 
+    # clear all lights before displaying the new ones
+    clear_display()
+
     # iterates from Least Significant Bit (LSB) to Most Significant Bit (MSB)
     # by checking if the number is odd, and then shifting one bit to the right
     # until number is zero
@@ -48,8 +51,6 @@ def display_binary(number):
         # check if odd
         if number % 2 == 1:
             GPIO.output(leds[index], GPIO.HIGH)
-        else:
-            GPIO.output(leds[index], GPIO.LOW)
         index += 1
 
         # shift bits to the right by one
