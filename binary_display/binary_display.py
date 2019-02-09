@@ -56,6 +56,17 @@ def display_binary(number):
         number = number >> 1
 
 
+def clear_display():
+    '''
+    clear_display() -> None
+
+    Sets all of the LEDs to low
+    '''
+    # loop through the LEDs and set them to low
+    for led in leds:
+        GPIO.output(led, GPIO.LOW)
+
+
 def main():
     '''
     main -> int
