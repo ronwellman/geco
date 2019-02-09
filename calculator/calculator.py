@@ -102,18 +102,19 @@ def add_number():
     # assignments in this function will cause python to refer to it as a local
     # variable
     global result
-
+    temp = 0
     # since bits are already in reverse order, iterate through in order
     for index, bit in enumerate(bits):
         if bit:
-            result += 2**index
+            temp += 2**index
 
-    print(result, end='')
+    result += temp
+    print(temp, end='')
 
     if mode == 0:
         print(' + ', end='')
     else:
-        print('= ', end='')
+        print(' = ', end='')
 
 
 def clear_leds():
@@ -136,6 +137,7 @@ def display_sum():
     Display the sum in binary on the LEDs.
     '''
     # display result without destroying result
+    print(result)
     temp = result
     index = 0
 
