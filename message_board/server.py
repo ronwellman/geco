@@ -10,6 +10,9 @@ IP = '0.0.0.0'
 # build a socket via IPV4 TCP
 server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
+# ensure socket can be immediately reused
+server_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+
 # bind on every IPV4 Address via port 5555
 server_socket.bind((IP, PORT))
 
