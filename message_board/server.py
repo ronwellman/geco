@@ -21,7 +21,8 @@ try:
     while True:
         # accept incoming connections
         client_socket, client_address = server_socket.accept()
-        print(client_address)
+        print("Connection from: {} on port {}".format(client_address[0],
+                                                      client_address[1]))
 
         # read in a message
         message = client_socket.recv(65535)
