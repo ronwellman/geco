@@ -12,8 +12,14 @@ def main(server_IP, server_port):
 
             # Create the socket
             client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+
+            # connect to server
             client_socket.connect((server_IP, int(server_port)))
+
+            # send message
             client_socket.sendall(message.encode('utf-8'))
+
+            # close connection to server
             client_socket.close()
 
     except KeyboardInterrupt:
@@ -21,6 +27,8 @@ def main(server_IP, server_port):
     except ConnectionRefusedError:
         print("Unable to connect to server: {} on port {}".format(server_IP,
                                                                   server_port))
+    except OSError as e:
+        print("Error: {}".format(e))
 
 
 if __name__ == "__main__":
