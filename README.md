@@ -16,3 +16,6 @@ This is a repository for various GECO girls projects.
 
 5. [Calculator](./calculator/)
     This Raspberry Pi project extends the Binary display with the addition of five push buttons to build a calculator capable of adding two 4-bit numbers and displaying them to the LEDs.
+
+6. [Message Board](./message_board/)
+    This project is a very small project that builds a socket between from client to server for posting  messages.
