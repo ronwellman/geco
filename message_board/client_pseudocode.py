@@ -6,16 +6,27 @@ import sys
 
 
 def main(server_IP, server_port):
+
+    # get username
+
+
     try:
         while True:
 
             # get the message to send
 
+
+            # concatenate username to message
+
+
             # Create the socket
+
 
                 # connect to server
 
+
                 # send message
+
 
     except KeyboardInterrupt:
         pass

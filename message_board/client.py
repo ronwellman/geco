@@ -6,11 +6,18 @@ import sys
 
 
 def main(server_IP, server_port):
+
+    # get username
+    username = input("Username: ")
+
     try:
         while True:
 
             # get the message to send
             message = input("Message: ")
+
+            # concatenate username to message
+            message = "<{}> {}".format(username, message)
 
             # Create the socket
             with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
