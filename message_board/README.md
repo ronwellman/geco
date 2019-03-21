@@ -5,9 +5,12 @@ This can be completed with a Raspberry Pi or any system running Python.
 
 This lab should be completed after going through the [Networking
 Primer](./Networking_Primer.pdf) PDF.  The document takes roughly 30-45 minutes
-to get through and the lab should take about 15-20 minutes.  To allow for
-questions, discussions, and troubleshooting, 1.5 hours is a good timeline to
-shoot for.
+to get through.  Additionally, there is a [Wireshark](./wireshark.pcapng) PCAP 
+to demonstrate Encapsulation, DHCP, ARP, DNS, TCP, HTTP, and ICMP.  This takes
+about 15 minutes to get through.  The lab to build the message board client 
+should take an additional 15-20 minutes.  To allow for questions, discussions, 
+and troubleshooting, you'll need roughly 1.5 hours to cover all of the 
+material.
 
 ## Networking Concepts
 
@@ -26,7 +29,7 @@ shoot for.
     * UDP
 * Application Layer
     * Common Ports
-* Wireshark
+* Wireshark Walk-through
 
 ## Programming Concepts
     
