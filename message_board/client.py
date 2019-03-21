@@ -8,19 +8,18 @@ import sys
 def main(server_IP, server_port):
     try:
         while True:
+
+            # get the message to send
             message = input("Message: ")
 
             # Create the socket
-            client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
 
-            # connect to server
-            client_socket.connect((server_IP, int(server_port)))
+                # connect to server
+                s.connect((server_IP, int(server_port)))
 
-            # send message
-            client_socket.sendall(message.encode('utf-8'))
-
-            # close connection to server
-            client_socket.close()
+                # send message
+                s.sendall(message.encode('utf-8'))
 
     except KeyboardInterrupt:
         pass
@@ -32,6 +31,8 @@ def main(server_IP, server_port):
 
 
 if __name__ == "__main__":
+
+    # ensure comand line inputs have been received
     if len(sys.argv) != 3:
         print("Usage: ./client SERVER_IP_ADDRESS SERVER_PORT")
         sys.exit(1)
