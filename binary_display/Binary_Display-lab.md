@@ -22,7 +22,7 @@ Now make the binary_display pseudocode available to the students via python:
 
 ```bash
 cd binary_display
-python -m http.server
+python3 -m http.server
 ```
 
 This should launch a web server on port 8000.  Students should go to their
