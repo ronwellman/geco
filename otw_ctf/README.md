@@ -33,6 +33,7 @@ bandit0
 bandit0
 
 #### Procedure
+
 ```bash
 ls
 cat readme
@@ -47,6 +48,7 @@ bandit1
 boJ9jbbUNNfktd78OOpsqOltutMc3MY1
 
 #### Procecure
+
 ```bash
 ls
 cat ./-
@@ -61,6 +63,7 @@ bandit2
 CV1DtqXWVFXTvM2F0k09SHz0YwRINYA9
 
 #### Procedure
+
 ```bash
 ls
 cat 'spaces in this filename'
@@ -75,6 +78,7 @@ bandit3
 UmHadQclWmgdLOKQ3YNgjWxGoRMb5luK
 
 #### Procedure
+
 ```bash
 ls
 cd inhere
@@ -91,6 +95,7 @@ bandit4
 pIwrPrtPN36QITSp3EQaw936yaFoFgAB
 
 #### Procedure
+
 ```bash
 ls
 cd inhere
@@ -128,6 +133,7 @@ bandit5
 koReBOKuIDDepwhWk7jZC0RTdopnAYKh
 
 #### Procedure
+
 ```bash
 ls
 cd inhere
@@ -161,6 +167,7 @@ bandit6
 DXjZPULLxYr17uwoI01bNLQbtFemEgo7
 
 #### Procedure
+
 ```bash
 find / -user bandit7 -group bandit6 -size 33c 2>/dev/null
 ```
@@ -174,6 +181,7 @@ bandit7
 HKBPTKQnIay4Fw76bEy8PVxKEDQRKTzs
 
 #### Procedure
+
 ```bash
 cat data.txt | grep millionth
 ```
@@ -187,6 +195,7 @@ bandit8
 cvX2JJa4CFALtqS87jk27qwqGhBM9plV
 
 #### Procedure
+
 ```bash
 sort data.txt | uniq -u
 ```
@@ -200,6 +209,7 @@ bandit9
 UsvVyFSfZZWbi6wgC7dAFyFuR6jQQUhR
 
 #### Procedure
+
 ```bash
 strings data.txt | grep ==
 ```
@@ -213,6 +223,7 @@ bandit10
 truKLdjsbJ5g7yyJ2X2R0o3a5HQJFuLk
 
 #### Procedure
+
 ```bash
 cat data.txt | base64 -d
 ```
@@ -224,5 +235,83 @@ bandit11
 
 #### PW
 IFukwKGsFW8MOq3IRFqrxE1hxTNEbUPR
+
+#### Procedure
+
+Option 1 - Python
+
+```bash
+cat data.txt
+python3
+```
+
+Copy the contents of data.txt from above  into a variable called message
+```python3
+message = 'Gur cnffjbeq vf 5Gr8L4qetPEsPk8htqjhRK8XSP6x2RHh'
+message.encode('rot-13')
+```
+
+Option 2 - tr
+
+```bash
+cat data.txt | tr 'A-Za-z' 'N-ZA-Mn-za-m'
+```
+
+## Level 12
+
+#### UN
+bandit12
+
+#### PW
+5Te8Y4drgCRfCx8ugdwuEX8KFC6k2EUu
+
+#### Procedure
+
+Create a temporary directory
+```bash
+mktemp
+```
+
+Move into the new directory and copy the data file
+```bash
+cd /tmp/tmp.THENEWDIRECTORY
+cp ~/data.txt ./
+```
+
+Test the file type
+```bash
+file data.txt
+```
+
+If it's a tar archive
+```bash
+mv data.txt data.tar
+tar -xf data.tar
+```
+
+If it's a gzip archive
+```bash
+mv data.txt data.gz
+gunzip data.gz
+```
+
+If its's a bzip2 archive
+```bash
+mv data.txt data.bz2
+bzip2 -d data.bz2
+```
+
+Continue checking the type, renaming, and decompressing.  You will go through a number of interations.  Eventually, you will be left with an ascii file.
+```bash
+cat data.txt
+```
+
+## Step 13
+
+#### UN
+bandit13
+
+#### PW
+8ZjyCRiBWFYkneahHwxCv3wb2a1ORpYL
 
 
