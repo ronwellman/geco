@@ -21,4 +21,7 @@ This is a repository for various GECO girls projects.
     This project is a very small project that builds a socket between from client to server for posting  messages.
 
 7. [Analog Sensors](./analog_sensors/)
-    This project utilizes the MCP3002 Analog to Digital Converter (ADC) to read from a temperature and light sensor. 
+    This project utilizes the MCP3002 Analog to Digital Converter (ADC) to read from a temperature and light sensor.
+
+8. [OTW CTF](./otw_ctf/)
+    This project utilizes the Over the Wire server as a CTF (Capture the Flag) style exercise.
