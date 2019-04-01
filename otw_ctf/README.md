@@ -245,13 +245,14 @@ cat data.txt
 python3
 ```
 
-Copy the contents of data.txt from above  into a variable called message
+Copy the contents of data.txt from above into a variable called message.
+
 ```python3
 message = 'Gur cnffjbeq vf 5Gr8L4qetPEsPk8htqjhRK8XSP6x2RHh'
 message.encode('rot-13')
 ```
 
-Option 2 - tr
+Option 2 - tr.
 
 ```bash
 cat data.txt | tr 'A-Za-z' 'N-ZA-Mn-za-m'
@@ -267,46 +268,64 @@ bandit12
 
 #### Procedure
 
-Create a temporary directory
+Create a temporary directory.
+
 ```bash
 mktemp
 ```
 
-Move into the new directory and copy the data file
+Move into the new directory and copy the data file.
+
 ```bash
 cd /tmp/tmp.THENEWDIRECTORY
 cp ~/data.txt ./
 ```
 
-Test the file type
+Test the file type:
+
 ```bash
 file data.txt
 ```
+The file is initially a hexdump of the original file.  To reverse it:
 
-If it's a tar archive
 ```bash
-mv data.txt data.tar
+xxd -r data.txt data
+```
+
+Test the file type:
+
+```bash
+file data
+```
+
+If it's a tar archive:
+
+```bash
+mv data data.tar
 tar -xf data.tar
 ```
 
-If it's a gzip archive
+If it's a gzip archive:
+
 ```bash
-mv data.txt data.gz
+mv data data.gz
 gunzip data.gz
 ```
 
-If its's a bzip2 archive
+If its's a bzip2 archive:
+
 ```bash
-mv data.txt data.bz2
+mv data data.bz2
 bzip2 -d data.bz2
 ```
 
 Continue checking the type, renaming, and decompressing.  You will go through a number of interations.  Eventually, you will be left with an ascii file.
+
 ```bash
 cat data.txt
 ```
 
-## Step 13
+## Level 13
 
 #### UN
 bandit13
@@ -314,4 +333,57 @@ bandit13
 #### PW
 8ZjyCRiBWFYkneahHwxCv3wb2a1ORpYL
 
+#### Procedures
+This following procedures require you to copy an ssh key to your local machine and use that to access bandit14.  There will be different procedures for Windows and Mac/Linux/UNIX.
 
+```bash
+cat sshkey.private
+```
+
+Copy and paste the contents into a file called bandit14.key.
+
+##### Windows
+You'll need to use Putty Key Generator to load the key into a usable Putty form.  Documentation can be found [here](https://support.rackspace.com/how-to/log-into-a-linux-server-with-an-ssh-private-key-on-windows/).
+
+##### Mac/Linux/UNIX
+Update permissions to the file so that only the owner can access it.
+
+```bash
+chmod 0600 bandit14.key
+```
+
+Reference the new key when you ssh into the bandit server:
+
+```bash
+ssh -p 2220 -i bandit14.key bandit14@bandit.labs.overthewire.org
+```
+
+## Level 14
+
+#### UN
+bandit14
+
+#### PW
+*bandit14.key* (ssh key access)
+
+Once logged in:
+
+```bash
+cat /etc/bandit_pass/bandit14
+```
+
+This reveals: 4wcYUJFw0k0XLShlDzztnTBHiqxU3b3e
+
+#### Procedure
+
+```bash
+echo "4wcYUJFw0k0XLShlDzztnTBHiqxU3b3e" | nc localhost 30000
+```
+
+## Level 15
+
+#### UN
+bandit15
+
+#### PW
+BfMYroe26WYalil77FoDi9qh59eK5xNr
