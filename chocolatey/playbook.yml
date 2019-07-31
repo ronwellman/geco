@@ -1,0 +1,14 @@
+---
+  - hosts: win
+    remote_user: Administrator
+
+    tasks:
+    - name: Install git
+      win_chocolatey:
+          name: git
+          state: latest
+
+    - name: Install putty
+      win_chocolatey:
+              name: putty
+              state: latest
