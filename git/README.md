@@ -25,9 +25,11 @@ Gitlab docker image and run that on my Linux machine.  This however, could have
 easily been done on a Raspberry Pi as well.  The only criteria that I am aware
 of is the server has to be Linux based, running docker and docker-compose, and 
 can be reached from other systems over the network.  Specifically, I suggest 
-making sure ports 443, 80, and 22 are reachable.
+making sure ports 443, 80, and 22 are reachable.  Additionally, if you were so
+inclined, you could stand up your own GitLab server. Directions can be found at
+[gitlab.com](https://about.gitlab.com/install/).
 
-To launch the included (./docker-compose.yml)[./docker-compose.yml] file type: 
+To launch the included [./docker-compose.yml](./docker-compose.yml) file type: 
 `docker-compose up -d` from within the directory containing this file.
 
 > **WARNING**: port 443, 80, and 22 may already be bound.
@@ -43,7 +45,8 @@ depending upon your download speeds.
 1. In the future, you can run `docker ps -a` find the gitlab instance, and run
    `docker start NAME` inserting the actual name of the container for *NAME*.
 1. Add the following line to /etc/hosts: `127.0.0.1     gitlab.scoa.org`
-1. Launch a web browser and browse to https://gitlab.scoa.org.
+1. Launch a web browser and browse to
+   [https://gitlab.scoa.org](https://gitlab.scoa.org).
 1. If this is your first time launching the docker image, it will prompt you
    to create a password for the *root* account.
 
@@ -62,7 +65,7 @@ guide: (ssh-GitLab.pdf)[./ssh-GitLab.pdf]
 #### Windows 10
 Windows 10 now comes pre-installed with OpenSSH which you'll need to generate
 ssh keys.  However, it does not come with Git.  You can open a browser and
-navigate to (https://git-scm.com/downloads)[https://git-scm.com/downloads] to
+navigate to [https://git-scm.com/downloads](https://git-scm.com/downloads) to
 download Git and install it. I recommend accepting all of the defaults during
 installation.
 
