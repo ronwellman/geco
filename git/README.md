@@ -1,3 +1,5 @@
+![SCOA](./images/SCOA_Logo_Small.png)
+
 # Git
 Git has become a necessity in the open-source ecosystem.  Git is a distributed
 version control system meaning that it helps software projects to remotely
