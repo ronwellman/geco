@@ -21,9 +21,9 @@ each student
 For my own edification, I decided to take a different approach and download the
 Gitlab docker image and run that on my Linux machine.  This however, could have
 easily been done on a Raspberry Pi as well.  The only criteria that I am aware
-of is the server has to be Linux based, running docker, and can be reached
-from other systems over the network.  Specifically, I suggest making sure ports
-443, 80, and 22 are reachable.
+of is the server has to be Linux based, running docker and docker-compose, and 
+can be reached from other systems over the network.  Specifically, I suggest 
+making sure ports 443, 80, and 22 are reachable.
 
 To launch the included (./docker-compose.yml)[./docker-compose.yml] file type: 
 `docker-compose up -d` from within the directory containing this file.
@@ -89,3 +89,50 @@ log history.  In order to preserve this, I put the following in my gitconfig:
 ```
 git config --global merge.ff=false
 ```
+
+### Hosts
+Systems connecting to the instance of  Gitlab running in docker will also want 
+to ensure that their hosts file is updated with the correct IP for the domain
+you used (gitlab.scoa.org in this case).  
+
+#### Windows
+One way to update windows is to right click the command prompt and select *run
+as administrator*.  Then navigate to c:\Windows\System32\drivers and then
+enter: `notepad.exe hosts`.  This will allow you to edit the hosts file.  Add
+the appropriate entry:  `IP_ADDRESS_OF_SYSTEM_RUNNING_GITLAB  gitlab.scoa.org`
+
+#### Linux
+From the CLI, edit the hosts file /etc/hosts with the editor of your choice:
+`sudo vi /etc/hosts`
+
+## Account Setup
+Create student accounts on either Github.com or on the Gitlab instance you are 
+hosting with Docker.  Ensure all students can log into an account and upload 
+SSH keys. Click *settings* under the user dropdown in the upper right
+hand corner of Gitlab:
+
+![Settings](./images/settings.png)
+
+#### SSH Keys
+Students should copy out the contents of their public key they created
+earlier and paste it in on the SSH settings page.
+
+![SSH](./images/ssh_keys.png)
+
+## Repository Setup
+Create a project either from the main page when you log in or from the drop 
+down as seen here:
+
+![Create Project](./images/create_project.png)
+
+Give the project an appropriate name, make it public for simplicity, and
+initialize it with a README.md to ensure the repository has something to
+actually clone.
+![Create Project](./images/blank_project.png)
+
+Add the students to the project as *developers* to ensure they can interact
+with it.  This can be done by selecting *settings* on the left-hand side after
+the project has been created.
+
+![Project Members](./images/project_members.png)
+
