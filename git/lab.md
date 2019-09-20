@@ -1,3 +1,5 @@
+![SCOA](./images/SCOA_Logo_Small.png)
+
 # Git Lab
 The following lab file will be used to direct students in using Git.
 
