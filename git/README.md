@@ -21,9 +21,9 @@ each student
 For my own edification, I decided to take a different approach and download the
 Gitlab docker image and run that on my Linux machine.  This however, could have
 easily been done on a Raspberry Pi as well.  The only criteria that I am aware
-of is the server has to be Linux based, running docker, and can be reached
-from other systems over the network.  Specifically, I suggest making sure ports
-443, 80, and 22 are reachable.
+of is the server has to be Linux based, running docker and docker-compose, and 
+can be reached from other systems over the network.  Specifically, I suggest 
+making sure ports 443, 80, and 22 are reachable.
 
 To launch the included (./docker-compose.yml)[./docker-compose.yml] file type: 
 `docker-compose up -d` from within the directory containing this file.
