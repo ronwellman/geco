@@ -34,7 +34,7 @@ cd git_fun
 
 Check the status: `git status`
 
-This should show tht you are on branch *master* and that you are up-to-date
+This should show that you are on branch *master* and that you are up-to-date
 with *origin/master*
 
 ## Branch
@@ -145,3 +145,9 @@ Display full log
 Display one commit per line
 `git log --oneline`
 
+Have the students pick a file and see who edited the lines in it:
+`git blame FILENAME`
+
+## Experimentation
+Allow the students to Branch, make edits or create files, add and commit, merge 
+back into master, and push their changes back up to the server.
