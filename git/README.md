@@ -66,13 +66,8 @@ guide: (ssh-GitLab.pdf)[./ssh-GitLab.pdf]
 Windows 10 now comes pre-installed with OpenSSH which you'll need to generate
 ssh keys.  However, it does not come with Git.  You can open a browser and
 navigate to [https://git-scm.com/downloads](https://git-scm.com/downloads) to
-download Git and install it. I recommend accepting all of the defaults during
-installation.
+download Git and install it.
 
-This will attempt to store keys at c:\Users\USERNAME/.ssh/id_rsa which does not
-exists.  I suggest you create a '.ssh' folder and point to it when generating
-the keys.  From the command line you can run `type id_rsa.pub` and copy out the
-value.  You'll need this when setting up the
 
 #### Linux
 It is very rare to not have OpenSSH and Git already installed on a modern Linux
