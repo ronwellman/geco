@@ -71,6 +71,8 @@ actual commit does.
 
 Commit the file: `git commit -m 'Create file FILENAME.'`
 
+> *WARNING*: The Windows platform needs double quotes around the message.
+
 Check the status: `git status`
 
 > Students should see that there is nothing to commit because the file has been 
@@ -118,6 +120,8 @@ What is origin: `git config --list`
 
 ## Merge Branch
 `git merge --no-ff NEW_BRANCH_NAME -m 'Merging in NEW_BRANCH_NAME.'`
+
+> *WARNING*: The Windows platform needs double quotes around the message.
 
 If all goes well and there are no conflicts, lets push it up to the server.
 
