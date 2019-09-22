@@ -5,7 +5,7 @@ Git has become a necessity in the open-source ecosystem.  Git is a distributed
 version control system meaning that it helps software projects to remotely
 collaborate on their project and track changes to their source code.  It is not
 the only version control system in use but has become the defacto standard 
-amongst open-source projects.  In order to prepare our students for 
+among open-source projects.  In order to prepare our students for 
 participation in various group projects, we will introduce them to Git by 
 covering some of the basic commands and uses.
 
@@ -21,7 +21,7 @@ each student
 
 ## For the Brave and Slightly Crazy
 For my own edification, I decided to take a different approach and download the
-Gitlab docker image and run that on my Linux machine.  This however, could have
+GitLab docker image and run that on my Linux machine.  This however, could have
 easily been done on a Raspberry Pi as well.  The only criteria that I am aware
 of is the server has to be Linux based, running docker and docker-compose, and 
 can be reached from other systems over the network.  Specifically, I suggest 
@@ -37,7 +37,7 @@ To launch the included [./docker-compose.yml](./docker-compose.yml) file type:
 You'll need to shut down the conflicting services or launch on another machine.
 While the ports on the docker image are configurable, to keep the git labs 
 standardized, I decided to shut my own services down.  Specifically, I was 
-already running OpenSSH and therefore had to run `sudo sytemctl stop sshd`.
+already running OpenSSH and therefore had to run `sudo systemctl stop sshd`.
 
 1. This will download the docker image and fire it up.  It may take some time
 depending upon your download speeds.
@@ -71,10 +71,10 @@ download Git and install it.
 
 #### Linux
 It is very rare to not have OpenSSH and Git already installed on a modern Linux
-distro.  If for some reason it is not, it's probably a `yum install`, `dnf
+distribution.  If for some reason it is not, it's probably a `yum install`, `dnf
 install`, or `apt install` away.
 
-### Generate Gitconfig
+### Generate GitConfig
 The gitconfig file tells git various settings to use.  The below settings 
 
 ```
@@ -114,7 +114,7 @@ From the CLI, edit the hosts file /etc/hosts with the editor of your choice:
 ## Account Setup
 Create student accounts on either Github.com or on the Gitlab instance you are 
 hosting with Docker.  Ensure all students can log into an account and upload 
-SSH keys. Click *settings* under the user dropdown in the upper right
+SSH keys. Click *settings* under the user drop-down in the upper right
 hand corner of Gitlab:
 
 ![Settings](./images/settings.png)

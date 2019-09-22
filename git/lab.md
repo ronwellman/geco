@@ -116,7 +116,7 @@ What this accomplishes is a *fetch* from origin and a *merge* into master.
 
 What is origin: `git config --list`
 
-> origin should be listed as the original Github url the students cloned from.
+> origin should be listed as the original Github URL the students cloned from.
 
 ## Merge Branch
 `git merge --no-ff NEW_BRANCH_NAME -m 'Merging in NEW_BRANCH_NAME.'`
