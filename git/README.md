@@ -95,10 +95,16 @@ log history.  In order to preserve this, I put the following in my gitconfig:
 git config --global merge.ff=false
 ```
 
+> *WARNING*: This may not work on the Windows platform.
+
 ### Hosts
 Systems connecting to the instance of  Gitlab running in docker will also want 
 to ensure that their hosts file is updated with the correct IP for the domain
-you used (gitlab.scoa.org in this case).  
+you used (gitlab.scoa.org in this case). 
+
+> The following steps are only required if you are browsing to addresses that 
+do not currently exist within DNS (because you're running a local GitLab 
+instance in docker). 
 
 #### Windows
 One way to update windows is to right click the command prompt and select *run
@@ -141,3 +147,23 @@ the project has been created.
 
 ![Project Members](./images/project_members.png)
 
+#### Protected
+By default, the *master* branch is protected and therefore, only certain people
+can merge or delete this branch.  For simplicity, we're going to open it up to
+any developer can merge with it.
+
+As the administrator (root), select the repository and click *Repository* on
+the right hand side.  Now select *Branches*.  You should see that the master
+branch is protected but a link to *manage settings* is above it.  Click on
+*manage settings*:
+
+![Protected](./images/protected.png)
+
+Expand *Protected Branches*.  The master branch should be listed toward the
+bottom.  Set *Developers + Maintainers* for both *merge* and *push* and click
+*unprotect*:
+
+![Unprotect](./images/unprotect.png)
+
+Now anyone listed as a Developer or Maintainer for this repository will have
+full control of the master branch.
