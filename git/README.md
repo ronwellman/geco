@@ -95,6 +95,8 @@ log history.  In order to preserve this, I put the following in my gitconfig:
 git config --global merge.ff=false
 ```
 
+> *Warning*: This may not work on the Windows platform.
+
 ### Hosts
 Systems connecting to the instance of  Gitlab running in docker will also want 
 to ensure that their hosts file is updated with the correct IP for the domain
