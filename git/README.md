@@ -149,14 +149,14 @@ any developer can merge with it.
 
 As the administrator (root), select the repository and click *Repository* on
 the right hand side.  Now select *Branches*.  You should see that the master
-branch is protected but a link to *manage settings* is above it.  Click on
-*manage settings*:
+branch is protected but a link to *project settings* is above it.  Click on
+*project settings*:
 
 ![Protected](./images/protected.png)
 
 Expand *Protected Branches*.  The master branch should be listed toward the
 bottom.  Set *Developers + Maintainers* for both *merge* and *push* and click
-*unprotect*:
+*Unprotect*:
 
 ![Unprotect](./images/unprotect.png)
 
