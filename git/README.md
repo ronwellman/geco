@@ -95,12 +95,16 @@ log history.  In order to preserve this, I put the following in my gitconfig:
 git config --global merge.ff=false
 ```
 
-> *Warning*: This may not work on the Windows platform.
+> *WARNING*: This may not work on the Windows platform.
 
 ### Hosts
 Systems connecting to the instance of  Gitlab running in docker will also want 
 to ensure that their hosts file is updated with the correct IP for the domain
-you used (gitlab.scoa.org in this case).  
+you used (gitlab.scoa.org in this case). 
+
+> The following steps are only required if you are browsing to addresses that 
+do not currently exist within DNS (because you're running a local GitLab 
+instance in docker). 
 
 #### Windows
 One way to update windows is to right click the command prompt and select *run
