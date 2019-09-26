@@ -20,11 +20,11 @@ mode = 0
 
 
 def setup():
-    '''
+    """
     setup() -> NoneType
 
     Setup RPi GPIO base parameters.
-    '''
+    """
     # BCM so GPIO pin numbers match
     GPIO.setmode(GPIO.BCM)
 
@@ -41,21 +41,21 @@ def setup():
 
 
 def teardown():
-    '''
+    """
     teardown() -> NoneType
 
     Restore RPi GPIO parameters.
-    '''
+    """
     # reset RPi GPIO before exiting
     GPIO.cleanup()
 
 
 def button_push(button):
-    '''
+    """
     button_push(int) -> None
 
     Updates the LEDs and mode according the the button that was pushed.
-    '''
+    """
     # marked global to ensure it references the global mode and result since
     # assignments in this function that will cause python to refer to them
     # as local variables.
@@ -93,11 +93,11 @@ def button_push(button):
 
 
 def add_number():
-    '''
+    """
     add_number() -> None
 
     Sum the binary bits and store the result.
-    '''
+    """
     # marked global to ensure it references the global result since
     # assignments in this function will cause python to refer to it as a local
     # variable
@@ -106,23 +106,23 @@ def add_number():
     # since bits are already in reverse order, iterate through in order
     for index, bit in enumerate(bits):
         if bit:
-            temp += 2**index
+            temp += 2 ** index
 
     result += temp
-    print(temp, end='')
+    print(temp, end="")
 
     if mode == 0:
-        print(' + ', end='')
+        print(" + ", end="")
     else:
-        print(' = ', end='')
+        print(" = ", end="")
 
 
 def clear_leds():
-    '''
+    """
     clear_leds() -> None
 
     Turns each of the LEDs off.
-    '''
+    """
     for led in leds:
         GPIO.output(led, GPIO.LOW)
 
@@ -131,11 +131,11 @@ def clear_leds():
 
 
 def display_sum():
-    '''
+    """
     display_sum() -> None
 
     Display the sum in binary on the LEDs.
-    '''
+    """
     # display result without destroying result
     print(result)
     temp = result
@@ -158,11 +158,11 @@ def display_sum():
 
 
 def main():
-    '''
+    """
     main -> int
 
     Add four binary bits together and display results to LEDs.
-    '''
+    """
     try:
         # infinite loop
         while True:
