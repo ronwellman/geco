@@ -40,7 +40,7 @@ class Solver:
 
         # initially look at what surrounds current position
         self._query_quadrants()
-    
+
     @staticmethod
     def left(position):
         """
@@ -122,13 +122,14 @@ class Solver:
 
             # determine if we have visited all known positions
             unvisited = self.seen.difference(self.visited)
-            
+
             if len(unvisited) == 0:
                 break
 
             # choose a direction to go
             if self.end is not None:
                 self._update_pos(self.end)
+                return
             elif (self.up(self.curr_pos)) in unvisited:
                 self._update_pos(self.up(self.curr_pos))
             elif (self.down(self.curr_pos)) in unvisited:
@@ -159,9 +160,9 @@ class Solver:
             # print solver's progress
             print(self)
 
-            # check to see if we've reached the end
-            if self.end is not None:
-                break
+            # # check to see if we've reached the end
+            # if self.end is not None:
+            #     break
 
     def _update_pos(self, position):
         """

@@ -37,10 +37,48 @@ class Solver:
         # record that we have visited and seen the start
 
 
-
-
         # initially look at what surrounds current position
-        self._query_quadrants()
+   
+
+    @staticmethod
+    def left(position):
+        """
+        left(tuple) -> tuple
+
+        Returns position moved left by 1.
+        """
+        row, col = position
+        return (row, col - 1)
+
+    @staticmethod
+    def right(position):
+        """
+        right(tuple) -> tuple
+
+        Returns position moved right by 1.
+        """
+        row, col = position
+        return (row, col + 1)
+
+    @staticmethod
+    def up(position):
+        """
+        up(tuple) -> tuple
+
+        Returns position moved up by 1.
+        """
+        row, col = position
+        return (row - 1, col)
+
+    @staticmethod
+    def down(position):
+        """
+        down(tuple) -> tuple
+
+        Returns position moved down by 1.
+        """
+        row, col = position
+        return (row + 1, col)
 
     def _query_quadrants(self):
         """
@@ -48,7 +86,6 @@ class Solver:
 
         Peers into the four coordinates around the current position.
         """
-        row, col = self.curr_pos
 
         # update seen up, down, left, and right
 
@@ -56,22 +93,23 @@ class Solver:
 
 
 
-    def _update_seen(self, row, col):
+    def _update_seen(self, position):
         """
-        _update_seen(int, int) -> NoneType
+        _update_seen(tuple) -> NoneType
 
         Checks the position and updates seen if position is empty.
         """
+
         # query the maze for what is at row, col
-        value = self.maze.get_point(row, col)
+        value = self.maze.get_point(position)
 
         # Only update seen if position is blank or End point
         if value == " " or value == "E":
-            self.seen.add((row, col))
+            self.seen.add(position)
 
         # if position is End Point, record it in self.end
         if value == "E":
-            self.end = (row, col)
+            self.end = position
 
     def search(self):
         """
@@ -83,27 +121,30 @@ class Solver:
 
             # determine if we have visited all known positions
             unvisited = self.seen.difference(self.visited)
+            
             if len(unvisited) == 0:
                 break
 
-            row, col = self.curr_pos
-
             # choose a direction to go
+            if self.end is not None:
 
+            elif 
 
+            elif
 
+            elif
 
+            elif
 
+            else:
+                # last entry in path is where solver is currently standing
+                self.path.pop()
 
-
-
-
-
-
+                # move to previous position
 
 
             # take a look at surrounding positions
-
+            self._query_quadrants()
 
             # take a quick sleep so we can watch the progress of the search
             time.sleep(0.1)
@@ -115,31 +156,26 @@ class Solver:
                 os.system("clear")
 
             # print solver's progress
-
+            print(self)
 
             # check to see if we've reached the end
             if self.end is not None:
                 break
 
-    def _update_pos(self, row=None, col=None):
+    def _update_pos(self, position):
         """
-        update_pos(int, int) -> NoneType
+        update_pos(tuple) -> NoneType
 
         Updates current position.
         """
-        # if no position was sent, backtrack a position
-
-
-
-
         # update current position
-
+        self.curr_pos = position
 
         # add new position to path (list)
-
+        self.path.append(self.curr_pos)
 
         # add new position to visited (set)
-
+        self.visited.add(self.curr_pos)
 
     def __str__(self):
         """
@@ -147,6 +183,10 @@ class Solver:
 
         Print the current state of the maze.
         """
+        # if maze has been solved, only show path that was taken
+        if self.end is not None:
+            return self.maze.__str__(self.path, self.curr_pos)
+
         return self.maze.__str__(self.visited, self.curr_pos)
 
 
