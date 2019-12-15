@@ -111,7 +111,7 @@ The maps were further modified to close them in completely and place a start
         '''
 ```
 
-### left
+### Left
 ```
     def left(position):
         """
@@ -121,7 +121,7 @@ The maps were further modified to close them in completely and place a start
         """
 ```
 
-### right
+### Right
 ```
     def right(position):
         """
@@ -131,7 +131,7 @@ The maps were further modified to close them in completely and place a start
         """
 ```
 
-### up
+### Up
 ```
     def up(position):
         """
@@ -141,7 +141,7 @@ The maps were further modified to close them in completely and place a start
         """
 ```
 
-### down
+### Down
 ```
     def down(position):
         """
